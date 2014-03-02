@@ -1,0 +1,25 @@
+{
+  "name": "warmsea",
+  "version": "0.3.0-alpha.1",
+  "description": "My JavaScript library.",
+  "main": "warmsea.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warmsea/WarmseaJS.git"
+  },
+  "keywords": ["warmsea", "javascript", "library"],
+  "author": "Su Su",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/warmsea/WarmseaJS/issues"
+  },
+  "homepage": "https://github.com/warmsea/WarmseaJS",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-requirejs": "~0.4.3",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-jsonlint": "~1.0.4",
+    "load-grunt-tasks": "~0.4.0",
+    "requirejs": "~2.1.11"
+  }
+}
