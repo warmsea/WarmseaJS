@@ -1,7 +1,9 @@
 // @formatter:off
 define([
-	'./core'
-], function(w) { 'use strict';
+  './core',
+  './math'
+], function(w) {
+  'use strict';
 // @formatter:on $HEADER$
 
   /**
@@ -30,8 +32,13 @@ define([
    */
   w.i = function(value, radix) {
     var v = value;
-    if (w.isObject(v) && '__int__' in v) {
+    if (v === true) {
+      return 1;
+    } else if (w.isObject(v) && '__int__' in v) {
       return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
+    } else if (!radix && w.isString(v) && //
+    (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
+      return parseInt(v, 16);
     } else if (!radix || radix === 10) {
       return Math.round(parseFloat(v));
     } else {
@@ -50,7 +57,9 @@ define([
    */
   w.f = function(value) {
     var v = value;
-    if (w.isObject(v) && '__float__' in v) {
+    if (v === true) {
+      return 1.0;
+    } else if (w.isObject(v) && '__float__' in v) {
       return w.f(w.isFunction(v.__float__) ? v.__float__() : v.__float__);
     } else {
       return parseFloat(v);

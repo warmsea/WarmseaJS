@@ -1,19 +1,9 @@
 // @formatter:off
 define([
-	'./core',
-], function(w) { 'use strict';
+  './core',
+], function(w) {
+  'use strict';
 // @formatter:on $HEADER$
-
-  /**
-   * The default compare function
-   *
-   * @param {?} a A value.
-   * @param {?} b Another value.
-   * @return {Number} 1, if a > b; -1, if a < b; 0, otherwise.
-   */
-  w.cmp = function(a, b) {
-    return a > b ? 1 : a < b ? -1 : 0;
-  };
 
   /**
    * Return the smallest value.

@@ -1,9 +1,9 @@
 // @formatter:off
 define([
-	'../core',
-	'../types',
-	'../math.js'
-], function(w) { 'use strict';
+  '../core',
+  '../types'
+], function(w) {
+  'use strict';
 // @formatter:on $HEADER$
 
   /**
@@ -114,8 +114,7 @@ define([
    *
    * @param {String|Function} format the format string.
    */
-  w.format = function(format /* , args_array | args_map | arg1, arg2, arg3, ...
-   * */) {
+  w.format = function(format /* , args_array | args_map | arg1, arg2, arg3, ... */) {
     if (!arguments.length) {
       return '';
     }
@@ -358,16 +357,16 @@ define([
       value = w.i(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       var prefix = flags['#'] ? {
-      'd' : '',
-      'o' : '0',
-      'x' : '0x',
-      'X' : '0X'
+        'd': '',
+        'o': '0',
+        'x': '0x',
+        'X': '0X'
       }[type] : '';
       value = Math.abs(value).toString({
-      'd' : 10,
-      'o' : 8,
-      'x' : 16,
-      'X' : 16
+        'd': 10,
+        'o': 8,
+        'x': 16,
+        'X': 16
       }[type]);
       var gap = w.max(0, width - prefix.length - value.length - sign.length);
       if (flags['-']) {

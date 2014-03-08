@@ -1,14 +1,14 @@
 /*!
- * warmsea JavaScript Library v0.3.0-alpha.1
+ * warmsea JavaScript Library v0.3.0-alpha.2
  *
  * Copyright 2009, 2014 Su Su
  * Released under the MIT license
  *
- * Date: 2014-03-02
+ * Date: 2014-03-08
  */
 
 (function(global) {
-	'use strict';
+  'use strict';
 
   /**
    * This will be the global {@code warmsea} namespace in CommonJS, or the
@@ -23,6 +23,213 @@
    * A shortcut for {@warmsea}.
    */
   var w = warmsea;
+
+  /**
+   * A function with no operation.
+   */
+  w.noop = function() {
+  };
+
+  /**
+   * An identity function.
+   *
+   * @param {?} x A value.
+   * @return {?} {@code x} itself.
+   */
+  w.identity = function(x) {
+    return x;
+  };
+
+  /**
+   * An unimplemented function that throws an error.
+   */
+  w.unimplemented = function() {
+    var msg = 'Unimplemented function.';
+    if (w.isFunction(w.error)) {
+      w.error(msg);
+    } else {
+      throw new Error(msg);
+    }
+  };
+
+  /**
+   * Throws an Error.
+   *
+   * @param {String} msg The error message.
+   * @throws {Error} An error with a message.
+   */
+  w.error = function(msg) {
+    throw new Error(msg);
+  };
+
+  /**
+   * The default compare function
+   *
+   * @param {?} a A value.
+   * @param {?} b Another value.
+   * @return {Number} 1, if a &gt; b; -1, if a &lt; b; 0, otherwise.
+   */
+  w.cmp = function(a, b) {
+    return a > b ? 1 : a < b ? -1 : 0;
+  };
+
+  /**
+   * Returns the keys of an object.
+   *
+   * Samples:
+   *
+   * Code: w.keys(['a', 'b', 'c']);
+   * Result: ["0", "1", "2"]
+   *
+   * Code: w.keys({a:1, b:2, c:3});
+   * Result: ["a", "b", "c"]
+   *
+   * @param {Object} obj An Object.
+   * @return {Array} The keys of the object.
+   */
+  w.keys = function(obj) {
+    var keys = [];
+    for (var k in obj) {
+      if (obj.hasOwnProperty(k)) {
+        keys.push(k);
+      }
+    }
+    return keys;
+  };
+
+  /**
+   * Returns the values of an object.
+   * No deep copy. Equal sign (=) is used to cope the value.
+   *
+   * Samples:
+   *
+   * Code: w.values(['a', 'b', 'c']);
+   * Result: ["a", "b", "c"]
+   *
+   * Code: w.values({a:1, b:'hello', c:[1,2,3]});
+   * Result: [1, "hello", [1, 2, 3]]
+   *
+   * @param {Object} obj An object.
+   * @return {Array} The values of the object.
+   */
+  w.values = function(obj) {
+    var values = [];
+    for (var k in obj) {
+      if (obj.hasOwnProperty(k)) {
+        values.push(obj[k]);
+      }
+    }
+    return values;
+  };
+
+  /**
+   * Generate an array.
+   * This is the port of the Python range().
+   */
+  w.range = function(start, stop, step) {
+    if (arguments.length <= 1) {
+      stop = start || 0;
+      start = 0;
+    }
+    step = arguments[2] || 1;
+
+    var i = 0, len = Math.max(Math.ceil((stop - start) / step), 0);
+    var range = new Array(len);
+    while (i < len) {
+      range[i++] = start;
+      start += step;
+    }
+
+    return range;
+  };
+
+  /**
+   * In-place stable sort.
+   *
+   * @param {Array} arr The array to be sorted.
+   * @param {Function} cmp The compare function; by default, it's w.cmp。
+   * @return {Array} The sorted array.
+   */
+  w.sort = function(arr, cmp) {
+    cmp = cmp || w.cmp;
+    var i;
+    var len = arr.length;
+    for ( i = 0; i < len; ++i) {
+      // _wssi stands for Warmsea Stable Sort Id
+      arr[i]._wssi = i;
+    }
+    arr.sort(function(a, b) {
+      return cmp(a, b) || a._wssi - b._wssi;
+    });
+    for ( i = 0; i < len; ++i) {
+      delete arr[i]._wssi;
+    }
+    return arr;
+  };
+
+  /**
+   * Return the smallest value.
+   *
+   * @param {Function} cmp A optional compare function.
+   * @param {?} values Values as an array or a list of arguments.
+   * @return {?} The smallest value.
+   */
+  w.min = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
+    if (!arguments.length) {
+      return undefined;
+    }
+    var cmp, values;
+    if (w.isFunction(arguments[0])) {
+      cmp = arguments[0];
+      values = Array.prototype.slice.call(arguments, 1);
+    } else {
+      cmp = w.cmp;
+      values = Array.prototype.slice.call(arguments, 0);
+    }
+    if (!values.length) {
+      return undefined;
+    }
+    var data = w.isArray(values[0]) ? values[0] : values;
+    var min = data[0];
+    for (var i = 1, len = data.length; i < len; ++i) {
+      if (cmp(min, data[i]) > 0) {
+        min = data[i];
+      }
+    }
+    return min;
+  };
+
+  /**
+   * Return the largest value.
+   *
+   * @param {Function} cmp A optional compare function.
+   * @param {?} values Values as an array or a list of arguments.
+   * @return {?} The largest value.
+   */
+  w.max = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
+    if (!arguments.length) {
+      return undefined;
+    }
+    var cmp, values;
+    if (w.isFunction(arguments[0])) {
+      cmp = arguments[0];
+      values = Array.prototype.slice.call(arguments, 1);
+    } else {
+      cmp = w.cmp;
+      values = Array.prototype.slice.call(arguments, 0);
+    }
+    if (!values.length) {
+      return undefined;
+    }
+    var data = w.isArray(values[0]) ? values[0] : values;
+    var max = data[0];
+    for (var i = 1, len = data.length; i < len; ++i) {
+      if (cmp(max, data[i]) < 0) {
+        max = data[i];
+      }
+    }
+    return max;
+  };
 
   /**
    * Cast a value to a Boolean.
@@ -50,8 +257,13 @@
    */
   w.i = function(value, radix) {
     var v = value;
-    if (w.isObject(v) && '__int__' in v) {
+    if (v === true) {
+      return 1;
+    } else if (w.isObject(v) && '__int__' in v) {
       return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
+    } else if (!radix && w.isString(v) && //
+    (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
+      return parseInt(v, 16);
     } else if (!radix || radix === 10) {
       return Math.round(parseFloat(v));
     } else {
@@ -70,7 +282,9 @@
    */
   w.f = function(value) {
     var v = value;
-    if (w.isObject(v) && '__float__' in v) {
+    if (v === true) {
+      return 1.0;
+    } else if (w.isObject(v) && '__float__' in v) {
       return w.f(w.isFunction(v.__float__) ? v.__float__() : v.__float__);
     } else {
       return parseFloat(v);
@@ -203,81 +417,6 @@
   };
 
   /**
-   * The default compare function
-   *
-   * @param {?} a A value.
-   * @param {?} b Another value.
-   * @return {Number} 1, if a > b; -1, if a < b; 0, otherwise.
-   */
-  w.cmp = function(a, b) {
-    return a > b ? 1 : a < b ? -1 : 0;
-  };
-
-  /**
-   * Return the smallest value.
-   *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The smallest value.
-   */
-  w.min = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
-    if (!arguments.length) {
-      return undefined;
-    }
-    var cmp, values;
-    if (w.isFunction(arguments[0])) {
-      cmp = arguments[0];
-      values = Array.prototype.slice.call(arguments, 1);
-    } else {
-      cmp = w.cmp;
-      values = Array.prototype.slice.call(arguments, 0);
-    }
-    if (!values.length) {
-      return undefined;
-    }
-    var data = w.isArray(values[0]) ? values[0] : values;
-    var min = data[0];
-    for (var i = 1, len = data.length; i < len; ++i) {
-      if (cmp(min, data[i]) > 0) {
-        min = data[i];
-      }
-    }
-    return min;
-  };
-
-  /**
-   * Return the largest value.
-   *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The largest value.
-   */
-  w.max = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
-    if (!arguments.length) {
-      return undefined;
-    }
-    var cmp, values;
-    if (w.isFunction(arguments[0])) {
-      cmp = arguments[0];
-      values = Array.prototype.slice.call(arguments, 1);
-    } else {
-      cmp = w.cmp;
-      values = Array.prototype.slice.call(arguments, 0);
-    }
-    if (!values.length) {
-      return undefined;
-    }
-    var data = w.isArray(values[0]) ? values[0] : values;
-    var max = data[0];
-    for (var i = 1, len = data.length; i < len; ++i) {
-      if (cmp(max, data[i]) < 0) {
-        max = data[i];
-      }
-    }
-    return max;
-  };
-
-  /**
    * Pad a string to a given length by adding leading characters.
    *
    * @param {Number|String} value The value; usually a number.
@@ -385,8 +524,7 @@
    *
    * @param {String|Function} format the format string.
    */
-  w.format = function(format /* , args_array | args_map | arg1, arg2, arg3, ...
-   * */) {
+  w.format = function(format /* , args_array | args_map | arg1, arg2, arg3, ... */) {
     if (!arguments.length) {
       return '';
     }
@@ -629,16 +767,16 @@
       value = w.i(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       var prefix = flags['#'] ? {
-      'd' : '',
-      'o' : '0',
-      'x' : '0x',
-      'X' : '0X'
+        'd': '',
+        'o': '0',
+        'x': '0x',
+        'X': '0X'
       }[type] : '';
       value = Math.abs(value).toString({
-      'd' : 10,
-      'o' : 8,
-      'x' : 16,
-      'X' : 16
+        'd': 10,
+        'o': 8,
+        'x': 16,
+        'X': 16
       }[type]);
       var gap = w.max(0, width - prefix.length - value.length - sign.length);
       if (flags['-']) {

@@ -4,12 +4,19 @@ module.exports = function(grunt) {'use strict';
   var today = new Date();
 
   // Project configuration.
+  // jshint -W106
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jsonlint: {
       pkg: {
         src: ['package.json']
       },
+    },
+    jscs: {
+      src: 'src/**/*.js',
+      options: {
+        config: '.jscs.json'
+      }
     },
     requirejs: {
       compile: {
@@ -87,11 +94,16 @@ module.exports = function(grunt) {'use strict';
           'strict': false,
           // Globals
           'globals': {
-            'module': false,
+            // RequireJS
             'define': false,
             'require': false,
-            'test': false,
-            'ok': false
+            // QUnit
+            'deepEqual': false,
+            'equal': false,
+            'module': false,
+            'ok': false,
+            'strictEqual': false,
+            'test': false
           }
         }
       },
@@ -109,15 +121,20 @@ module.exports = function(grunt) {'use strict';
         src: 'dist/<%= pkg.name %>.js',
         dest: 'dist/<%= pkg.name %>.min.js'
       }
-    }
+    },
+    compare_size: {
+      files: ['dist/warmsea.js', 'dist/warmsea.min.js']
+    },
   });
 
   grunt.loadNpmTasks('grunt-jsonlint');
+  grunt.loadNpmTasks('grunt-jscs-checker');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-compare-size');
 
   // Default task(s).
-  grunt.registerTask('default', ['jsonlint', 'jshint:src', 'jshint:test', 'requirejs', 'jshint:compiled', 'uglify']);
+  grunt.registerTask('default', ['jsonlint', 'jscs', 'jshint:src', 'jshint:test', 'requirejs', 'jshint:compiled', 'uglify', 'compare_size']);
 
 };
