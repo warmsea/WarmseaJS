@@ -1,6 +1,6 @@
 {
   "name": "warmsea",
-  "version": "0.3.0-alpha.2",
+  "version": "0.3.0-alpha.3",
   "description": "My JavaScript library.",
   "main": "warmsea.js",
   "repository": {
@@ -20,12 +20,14 @@
   "homepage": "https://github.com/warmsea/WarmseaJS",
   "devDependencies": {
     "grunt": "~0.4.2",
+    "grunt-compare-size": "~0.4.0",
+    "grunt-contrib-qunit": "~0.4.0",
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-jsonlint": "~1.0.4",
+    "grunt-jscs-checker": "~0.4.0",
+    "gzip-js": "~0.3.2",
     "load-grunt-tasks": "~0.4.0",
-    "requirejs": "~2.1.11",
-    "grunt-compare-size": "~0.4.0",
-    "grunt-jscs-checker": "~0.4.0"
+    "requirejs": "~2.1.11"
   }
 }

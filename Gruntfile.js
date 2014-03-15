@@ -1,6 +1,7 @@
 module.exports = function(grunt) {'use strict';
 
   var pkg = grunt.file.readJSON('package.json');
+  var gzip = require('gzip-js');
   var today = new Date();
 
   // Project configuration.
@@ -122,9 +123,19 @@ module.exports = function(grunt) {'use strict';
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
-    compare_size: {
-      files: ['dist/warmsea.js', 'dist/warmsea.min.js']
+    qunit: {
+      all: ['test/test-min-plain.html']
     },
+    compare_size: {
+      files: ['dist/warmsea.js', 'dist/warmsea.min.js'],
+      options: {
+        compress: {
+          gz: function(contents) {
+            return gzip.zip(contents, {}).length;
+          }
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-jsonlint');
@@ -132,9 +143,20 @@ module.exports = function(grunt) {'use strict';
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-compare-size');
 
   // Default task(s).
-  grunt.registerTask('default', ['jsonlint', 'jscs', 'jshint:src', 'jshint:test', 'requirejs', 'jshint:compiled', 'uglify', 'compare_size']);
+  grunt.registerTask('default', [
+    'jsonlint',
+    'jscs',
+    'jshint:src',
+    'jshint:test',
+    'requirejs',
+    'jshint:compiled',
+    'uglify',
+    'qunit',
+    'compare_size'
+  ]);
 
 };

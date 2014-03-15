@@ -1,10 +1,10 @@
 /*!
- * warmsea JavaScript Library v0.3.0-alpha.2
+ * warmsea JavaScript Library v0.3.0-alpha.3
  *
  * Copyright 2009, 2014 Su Su
  * Released under the MIT license
  *
- * Date: 2014-03-08
+ * Date: 2014-03-15
  */
 
 (function(global) {
@@ -425,9 +425,10 @@
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
-    length = w.max(0, length === undefined ? 2 : length);
-    leading = (leading || '0')[0];
-    return new Array(length - value.length + 1).join(leading) + value;
+    length = w.max(0, length === undefined ? 2 : length, value.length);
+    leading = w.str(leading || '0');
+    var a = new Array(Math.ceil((length - value.length) / leading.length) + 1);
+    return a.join(leading).substring(0, length - value.length) + value;
   };
 
   /**
@@ -524,7 +525,7 @@
    *
    * @param {String|Function} format the format string.
    */
-  w.format = function(format /* , args_array | args_map | arg1, arg2, arg3, ... */) {
+  w.format = function(format /* , args_array | args_map | arg1, arg2,  ... */) {
     if (!arguments.length) {
       return '';
     }
@@ -563,10 +564,10 @@
     }
 
     var lines = w.str(func).split(/\r?\n/);
-    var i = 0, len = lines.length;
+    var i = 0, j = 0, len = lines.length;
     var startIndex, endIndex;
     var endTag, options = {};
-    var dent = Infinity;
+    var dent = null;
 
     // Find the start line.
     while (i < len) {
@@ -576,8 +577,8 @@
       }
       startIndex = i;
       endTag = start[1];
-      var optionTags = (start[2] || '').split(/[ \t],[ \t]/);
-      for (var j = 0, jLen = optionTags.length; j < jLen; ++j) {
+      var optionTags = (start[2] || '').split(/[ \t]*,[ \t]*/);
+      for (j = 0; j < optionTags.length; ++j) {
         var tag = optionTags[j].toLowerCase().split(/-(.*)/);
         if (tag[0]) {
           options[tag[0]] = tag[1] || true;
@@ -591,31 +592,34 @@
 
     // The default WS option is "OUTDENT".
     options.ws = options.ws || 'outdent';
-    // The default TAB dent count is 4.
-    options.tab = w.i(options.tab) || 4;
 
     var result = [];
-    var tabReplacement = w.pad('', options.tab, ' ');
 
     // Find the end line.
     while (i < len) {
       var line = lines[i];
-      if (line.match(new RegExp('^[ \\t]*' + endTag + '\\*\\/$'))) {
+      if (line.match(new RegExp('^[ \\t]*' + endTag + '\\*\\/'))) {
         endIndex = i;
         break;
-      }++i;
+      }
+      i++;
       // Count the dent here.
       if (options.ws === 'outdent') {
-        var match = line.match(/^([ \t]*)(.*)$/);
-        match[1] = match[1].replace(/\t/g, tabReplacement);
-        var cur = match[1].length;
-        if (dent > cur) {
+        var match = line.match(/^([ \t]*).*$/);
+        var cur = match[1];
+        if (dent === null) {
           dent = cur;
+        } else {
+          j = 0;
+          while (j < dent.length && j < cur.length && dent[j] === cur[j]) {
+            j++;
+          }
+          if (dent.length > j) {
+            dent = dent.substring(0, j);
+          }
         }
-        result.push(match[1] + match[2]);
-      } else {
-        result.push(line);
       }
+      result.push(line);
     }
     if (!endIndex) {
       w.error('Format failed: end line missing');
@@ -625,7 +629,7 @@
     switch (options.ws) {
       case 'outdent':
         wsFunc = function(s) {
-          return s.substring(dent);
+          return s.substring(dent.length);
         };
         break;
       case 'keep':
@@ -662,7 +666,8 @@
    *
    * @see warmsea#format
    */
-  FormatConvertor.prototype.convert = function(specifier, key, flags, width, precision, type, position) {
+  FormatConvertor.prototype.convert = function(
+      specifier, key, flags, width, precision, type, position) {
     if (type === undefined) {
       w.error('format incomplete specifier "%s" in position (%d).', specifier, position);
     }
@@ -779,13 +784,18 @@
         'X': 16
       }[type]);
       var gap = w.max(0, width - prefix.length - value.length - sign.length);
+      var result = '';
       if (flags['-']) {
-        return sign + prefix + value + w.pad('', gap, ' ');
+        result = sign + prefix + value + w.pad('', gap, ' ');
       } else if (flags['0']) {
-        return sign + prefix + w.pad('', gap, '0') + value;
+        result = sign + prefix + w.pad('', gap, '0') + value;
       } else {
-        return w.pad('', gap, ' ') + sign + prefix + value;
+        result = w.pad('', gap, ' ') + sign + prefix + value;
       }
+      if (type === 'X') {
+        result = result.toUpperCase();
+      }
+      return result;
     }
   };
 
