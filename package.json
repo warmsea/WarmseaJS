@@ -1,6 +1,6 @@
 {
   "name": "warmsea",
-  "version": "0.3.0-alpha.3",
+  "version": "0.3.0",
   "description": "My JavaScript library.",
   "main": "warmsea.js",
   "repository": {
