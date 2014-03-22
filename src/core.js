@@ -10,18 +10,12 @@ define([
 // @formatter:on $HEADER$
 
   /**
-   * This will be the global {@code warmsea} namespace in CommonJS, or the
-   * module in AMD.
+   * This will be the global <code>warmsea</code> namespace.
    *
-   * @namespace The main namespace of the warmsea JavaScript library.
+   * @namespace
+   * @alias warmsea
    */
-  var warmsea = function() {
-  };
-
-  /**
-   * A shortcut for {@warmsea}.
-   */
-  var w = warmsea;
+  var w = {};
 
   /**
    * A function with no operation.
@@ -33,7 +27,7 @@ define([
    * An identity function.
    *
    * @param {?} x A value.
-   * @return {?} {@code x} itself.
+   * @return {?} <code>x</code> itself.
    */
   w.identity = function(x) {
     return x;
@@ -167,6 +161,6 @@ define([
   };
 
   // $FOOTER$
-  return warmsea;
+  return w;
 
 });

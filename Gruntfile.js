@@ -126,6 +126,14 @@ module.exports = function(grunt) {'use strict';
     qunit: {
       all: ['test/test-min-plain.html']
     },
+    jsdoc: {
+      dist: {
+        src: ['dist/warmsea.js'],
+        options: {
+          destination: 'jsdoc'
+        }
+      }
+    },
     compare_size: {
       files: ['dist/warmsea.js', 'dist/warmsea.min.js'],
       options: {
@@ -144,6 +152,7 @@ module.exports = function(grunt) {'use strict';
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-compare-size');
 
   // Default task(s).
@@ -156,6 +165,7 @@ module.exports = function(grunt) {'use strict';
     'jshint:compiled',
     'uglify',
     'qunit',
+    'jsdoc',
     'compare_size'
   ]);
 

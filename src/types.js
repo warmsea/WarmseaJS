@@ -23,19 +23,16 @@ define([
 
   /**
    * Cast a value to an Integer.
-   * <p>
-   * I choose {@code w.i} instead of {@code w.int} to void the possible
-   * conflict with the future reserved word {@code int}.
    *
    * @param {?} value A value.
    * @return {Integer} The integer value.
    */
-  w.i = function(value, radix) {
+  w.int = function(value, radix) {
     var v = value;
     if (v === true) {
       return 1;
     } else if (w.isObject(v) && '__int__' in v) {
-      return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
+      return w.int(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
     } else if (!radix && w.isString(v) && //
     (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
       return parseInt(v, 16);
@@ -48,19 +45,16 @@ define([
 
   /**
    * Cast a value to a Float.
-   * <p>
-   * I choose {@code w.f} instead of {@code w.float} to void the possible
-   * conflict with the future reserved word {@code float}.
    *
    * @param {?} value A value.
    * @return {Float} The float value.
    */
-  w.f = function(value) {
+  w.float = function(value) {
     var v = value;
     if (v === true) {
       return 1.0;
     } else if (w.isObject(v) && '__float__' in v) {
-      return w.f(w.isFunction(v.__float__) ? v.__float__() : v.__float__);
+      return w.float(w.isFunction(v.__float__) ? v.__float__() : v.__float__);
     } else {
       return parseFloat(v);
     }
@@ -70,7 +64,7 @@ define([
    * Cast a value to a String.
    *
    * @param {?} value A value.
-   * @return {Float} The string value.
+   * @return {String} The string value.
    */
   w.str = function(value) {
     var v = value;
@@ -84,8 +78,8 @@ define([
   /**
    * Cast a value to an Array.
    *
-   * If {@code value} is {@code undefined} or {@code null}, an empty array
-   * will be returned.
+   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an
+   * empty array will be returned.
    *
    * @param {?} value A value.
    * @return {Array} The array value.
@@ -104,8 +98,8 @@ define([
    * Test whether a value is a number.
    *
    * @param {?} value A value.
-   * @return {Boolean} {@code true}, if {@code value} is a string;
-   *         {@code false}, otherwise.
+   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
+   *         <code>false</code>, otherwise.
    */
   w.isNumber = function(value) {
     return typeof value === 'number';
@@ -115,8 +109,8 @@ define([
    * Test whether a value is a string.
    *
    * @param {?} value A value.
-   * @return {Boolean} {@code true}, if {@code value} is a string;
-   *         {@code false}, otherwise.
+   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
+   *         <code>false</code>, otherwise.
    */
   w.isString = function(value) {
     return typeof value === 'string';
@@ -126,8 +120,8 @@ define([
    * Test whether a value is an array.
    *
    * @param {?} value A value.
-   * @return {Boolean} {@code true}, if {@code value} is an array;
-   *         {@code false}, otherwise.
+   * @return {Boolean} <code>true</code>, if <code>value</code> is an array;
+   *         <code>false</code>, otherwise.
    */
   w.isArray = function(value) {
     return value instanceof Array;
@@ -137,8 +131,8 @@ define([
    * Test whether a value is a function.
    *
    * @param {?} value A value.
-   * @return {Boolean} {@code true}, if {@code value} is a function;
-   *         {@code false}, otherwise.
+   * @return {Boolean} <code>true</code>, if <code>value</code> is a function;
+   *         <code>false</code>, otherwise.
    */
   w.isFunction = function(value) {
     return typeof value === 'function';
@@ -154,8 +148,8 @@ define([
    * <code>new Object</code>.
    *
    * @param {?} value A value.
-   * @return {Object} {@code true}, if {@code value} is a plain object;
-   *         {@code false}, otherwise.
+   * @return {Object} <code>true</code>, if <code>value</code> is a plain
+   *         object; <code>false</code>, otherwise.
    */
   w.isPlainObject = function(value) {
     if (String(value) !== '[object Object]') {
@@ -174,18 +168,19 @@ define([
   /**
    * Test whether a value is an object.
    * <p>
-   * {@code undefined}, {@code null}, numbers, strings won't pass this test,
-   * everything else will.
+   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass
+   * this test, everything else will.
    * <p>
    * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but
    * <code>warmsea.isObject(null)</code> returns <code>false</code>. Because
-   * using a {@code null} object is always error-prone.
+   * using a <code>null</code> object is always error-prone.
    * <p>
-   * Arrays pass both {@code warmsea.isArray()} and {@code warmsea.isObject}.
+   * Arrays pass both <code>warmsea.isArray()</code> and
+   * <code>warmsea.isObject()</code>.
    *
    * @param {?} value A value.
-   * @return {Object} {@code true}, if {@code value} is an object;
-   *         {@code false}, otherwise.
+   * @return {Object} <code>true</code>, if <code>value</code> is an object;
+   *         <code>false</code>, otherwise.
    */
   w.isObject = function(value) {
     return value !== null && typeof value === 'object';

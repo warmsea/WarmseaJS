@@ -16,4 +16,7 @@ node_modules
 
 .project
 .DS_Store
+
 .sizecache.json
+dist
+jsdoc

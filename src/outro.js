@@ -1,9 +1,9 @@
   if ( typeof define === 'function' && define.amd) {
     define(function() {
-      return warmsea;
+      return w;
     });
   } else {
-      global.warmsea = warmsea;
+      global.warmsea = w;
   }
 
 })(this);

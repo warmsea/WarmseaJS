@@ -3,11 +3,11 @@ define([
   './core',
   './types',
   './strings'
-], function(warmsea) {
+], function(w) {
   'use strict';
 // @formatter:on $HEADER$
 
   // $FOOTER$
-  return warmsea;
+  return w;
 
 });

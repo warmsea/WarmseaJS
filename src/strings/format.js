@@ -326,7 +326,7 @@ define([
       return FormatConvertor.prototype.convertors.int('X', value, flags, width);
     },
     'f': function(value, flags, width, precision) {
-      value = w.f(value);
+      value = w.float(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       value = Math.abs(value).toFixed(precision);
       if (flags['#'] && precision === 0) {
@@ -359,7 +359,7 @@ define([
       return '/';
     },
     'int': function(type, value, flags, width) {
-      value = w.i(value);
+      value = w.int(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       var prefix = flags['#'] ? {
         'd': '',
