@@ -72,7 +72,7 @@ define(function() {
          EOD*/
       }), 'hello');
       strictEqual(f(function() {
-        /*<<<ABC
+        /*!<<<ABC
          %s
          ABC*/
       }, 'hello'), 'hello');

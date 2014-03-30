@@ -1,8 +1,3 @@
-// jshint -W098
-// Disable the warning: 'w' is defined but never used.
-// Across the WarmseaJS source files, 'w' is used as the shortcut for
-// 'warmsea'. After compile the source files into a single file, here is where
-// 'w' is defined.
 // @formatter:off
 define([
 ], function() {

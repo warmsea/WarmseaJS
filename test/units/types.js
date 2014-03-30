@@ -54,35 +54,35 @@ define(function() {
     });
 
     test('warmsea.i()', function() {
-      ok(isNaN(w.int(NaN)));
-      ok(isNaN(w.int('a')));
-      ok(isNaN(w.int('-')));
-      ok(isNaN(w.int(undefined)));
-      ok(isNaN(w.int(null)));
-      ok(isNaN(w.int(false)));
-      ok(isNaN(w.int({})));
-      equal(w.int(11), 11);
-      equal(w.int(true), 1);
-      equal(w.int('011'), 11);
-      equal(w.int('0xAB'), 171);
-      equal(w.int('AB', 16), 171);
-      equal(w.int('-9ab'), -9);
-      equal(w.int('-9.3'), -9);
-      equal(w.int('-9.7'), -10);
+      ok(isNaN(w.i(NaN)));
+      ok(isNaN(w.i('a')));
+      ok(isNaN(w.i('-')));
+      ok(isNaN(w.i(undefined)));
+      ok(isNaN(w.i(null)));
+      ok(isNaN(w.i(false)));
+      ok(isNaN(w.i({})));
+      equal(w.i(11), 11);
+      equal(w.i(true), 1);
+      equal(w.i('011'), 11);
+      equal(w.i('0xAB'), 171);
+      equal(w.i('AB', 16), 171);
+      equal(w.i('-9ab'), -9);
+      equal(w.i('-9.3'), -9);
+      equal(w.i('-9.7'), -10);
     });
 
     test('warmsea.f()', function() {
-      ok(isNaN(w.float(NaN)));
-      ok(isNaN(w.float(undefined)));
-      ok(isNaN(w.float(null)));
-      ok(isNaN(w.float('a')));
-      ok(isNaN(w.float('-')));
-      ok(isNaN(w.float(false)));
-      ok(isNaN(w.float({})));
-      equal(w.float(true), 1.0);
-      equal(w.float(1.7), 1.7);
-      equal(w.float('-1.7'), -1.7);
-      equal(w.float('-1.7e4'), -1.7e4);
+      ok(isNaN(w.f(NaN)));
+      ok(isNaN(w.f(undefined)));
+      ok(isNaN(w.f(null)));
+      ok(isNaN(w.f('a')));
+      ok(isNaN(w.f('-')));
+      ok(isNaN(w.f(false)));
+      ok(isNaN(w.f({})));
+      equal(w.f(true), 1.0);
+      equal(w.f(1.7), 1.7);
+      equal(w.f('-1.7'), -1.7);
+      equal(w.f('-1.7e4'), -1.7e4);
     });
 
     test('warmsea.str()', function() {
@@ -109,8 +109,8 @@ define(function() {
       obj.__float__ = 9;
       obj.__str__ = 9;
       strictEqual(w.bool(obj), true);
-      equal(w.int(obj), 9);
-      equal(w.float(obj), 9.0);
+      equal(w.i(obj), 9);
+      equal(w.f(obj), 9.0);
       equal(w.str(obj), '9');
       var temp = function() {
         return 9;
@@ -120,8 +120,8 @@ define(function() {
       obj.__float__ = temp;
       obj.__str__ = temp;
       strictEqual(w.bool(obj), true);
-      equal(w.int(obj), 9);
-      equal(w.float(obj), 9.0);
+      equal(w.i(obj), 9);
+      equal(w.f(obj), 9.0);
       equal(w.str(obj), '9');
     });
 

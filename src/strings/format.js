@@ -161,7 +161,7 @@ define([
 
     // Find the start line.
     while (i < len) {
-      var start = lines[i++].match(/^[ \t]*\/\*<<<(\w+)(?:;(.+)?)?$/);
+      var start = lines[i++].match(/^[ \t]*\/\*!?<<<(\w+)(?:;(.+)?)?$/);
       if (!start) {
         continue;
       }
@@ -314,19 +314,19 @@ define([
    */
   FormatConvertor.prototype.convertors = {
     'd': function(value, flags, width /*, precision */ ) {
-      return FormatConvertor.prototype.convertors.int('d', value, flags, width);
+      return FormatConvertor.prototype.convertors.ic('d', value, flags, width);
     },
     'o': function(value, flags, width /*, precision */ ) {
-      return FormatConvertor.prototype.convertors.int('o', value, flags, width);
+      return FormatConvertor.prototype.convertors.ic('o', value, flags, width);
     },
     'x': function(value, flags, width /*, precision */ ) {
-      return FormatConvertor.prototype.convertors.int('x', value, flags, width);
+      return FormatConvertor.prototype.convertors.ic('x', value, flags, width);
     },
     'X': function(value, flags, width /*, precision */ ) {
-      return FormatConvertor.prototype.convertors.int('X', value, flags, width);
+      return FormatConvertor.prototype.convertors.ic('X', value, flags, width);
     },
     'f': function(value, flags, width, precision) {
-      value = w.float(value);
+      value = w.f(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       value = Math.abs(value).toFixed(precision);
       if (flags['#'] && precision === 0) {
@@ -358,8 +358,8 @@ define([
       this.index--;
       return '/';
     },
-    'int': function(type, value, flags, width) {
-      value = w.int(value);
+    'ic': function(type, value, flags, width) {
+      value = w.i(value);
       var sign = value < 0 ? '-' : (flags['+'] ? '+' : flags[' '] ? ' ' : '');
       var prefix = flags['#'] ? {
         'd': '',
