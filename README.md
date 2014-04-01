@@ -19,10 +19,11 @@ You can also run `grunt jsdoc` to generate the API documentation. Or check the
 Get Started
 -----------
 
-Download **WarmseaJS** and include it with `<script>` tag or
-[**RequireJS**](http://requirejs.org/). When included with `<script>` tag, a
-global namespace `warmsea` will be introduced. And personally, I use `w` as a
-shortcut for `warmsea`.
+Download
+[**WarmseaJS**](https://github.com/warmsea/WarmseaJS/releases/download/v0.3.0/warmseajs-v0.3.0.zip)
+and include it with `<script>` tag or [**RequireJS**](http://requirejs.org/).
+When included with `<script>` tag, a global namespace `warmsea` will be
+introduced. And personally, I use `w` as a shortcut for `warmsea`.
 
 ```html
 <script src="path/to/warmsea.min.js"></script>
