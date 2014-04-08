@@ -26,7 +26,8 @@ Download **WarmseaJS**:
 
 Include the JS file with `<script>` tag or [**RequireJS**](http://requirejs.org/).
 When included with `<script>` tag, a global namespace `warmsea` will be
-introduced. And personally, I use `w` as a shortcut for `warmsea`.
+introduced. And personally, I use `w` as a shortcut for `warmsea`. You could
+also use `warmseajs`, `wjs`, `$w` or anything you want.
 
 ```html
 <script src="path/to/warmsea.min.js"></script>
@@ -124,6 +125,11 @@ w.format('%04d%02d%02d', 2004, 4, 1);  // '20040401'
 w.format('%x', 255);                   // 'ff'
 w.format('%#X', 255);                  // '0XFF'
 w.format('%+8.2f', 123.456);           // ' +123.46'
+
+w.format('%(year)04d-%(month)02d-%(day)02d',
+         {year: 2004, month: 4, day: 1});        // '2014-04-01'
+w.format('To %(action)s, or not to %(action)s.',
+         {action: 'do'});                        // 'To do, or not to do.'
 ```
 
 ```javascript
