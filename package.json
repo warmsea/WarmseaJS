@@ -2,7 +2,7 @@
   "name": "warmsea",
   "version": "0.3.0",
   "description": "My JavaScript library.",
-  "main": "warmsea.js",
+  "main": "dist/warmsea.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/warmsea/WarmseaJS.git"
