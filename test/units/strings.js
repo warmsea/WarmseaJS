@@ -53,6 +53,11 @@ define(function() {
       strictEqual(f('%- 6.1f', 12.3456), ' 12.3 ');
     });
 
+    test('Multi-part conversions', function() {
+      strictEqual(f('%s %s %s', 1, 2, 3), '1 2 3');
+      strictEqual(f('%s %s %s', [1, 2, 3]), '1 2 3');
+    });
+
     test('Conversions with mapping keys', function() {
       strictEqual(f('%(b)s%(a)s%(b)s', {
         a: 1,
