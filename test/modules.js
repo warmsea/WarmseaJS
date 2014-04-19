@@ -1,0 +1,1 @@
+var modules = ['core', 'types', 'strings', 'random'];

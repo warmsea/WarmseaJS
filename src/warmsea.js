@@ -2,7 +2,9 @@
 define([
   './core',
   './types',
-  './strings'
+  './strings',
+  './math',
+  './random'
 ], function(w) {
   'use strict';
 // @formatter:on $HEADER$

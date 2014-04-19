@@ -11,8 +11,8 @@
   <script src="./lib/qunit/qunit.js"></script>
   <script src="../dist/warmsea.min.js"></script>
   <script src="./lib/require.js"></script>
+  <script src="./modules.js"></script>
   <script>
-    var modules = ['core', 'types', 'strings'];
     for (var i = 0; i < modules.length; ++i) {
       var unit = modules[i];
       var req = require.config({

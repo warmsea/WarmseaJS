@@ -34,7 +34,6 @@
   "requireCapitalizedConstructors": true,
   "safeContextKeyword": ["that"],
   "validateJSDoc": {
-    "checkParamNames": true,
     "requireParamTypes": true
   },
 
