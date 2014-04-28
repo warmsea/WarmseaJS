@@ -1,11 +1,7 @@
 // @formatter:off
 define([
   './core',
-  './types',
-  './strings',
-  './math',
-  './random',
-  './collections'
+  './collections/Queue'
 ], function(w) {
   'use strict';
 // @formatter:on $HEADER$

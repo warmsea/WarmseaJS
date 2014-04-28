@@ -1,0 +1,87 @@
+// @formatter:off
+define([
+  '../core'
+], function(w) {
+  'use strict';
+// @formatter:on $HEADER$
+
+  /**
+   * Queue class. A Queue is a FIFO (First In, First Out) collection.
+   */
+  w.Queue = (function() {
+
+    var Queue = function(validator) {
+      this._validator = validator;
+      this.clear();
+      this.allowEmptyDequeue = true;
+    };
+
+    Object.defineProperty(Queue.prototype, 'length', {
+      enumerable: true,
+      get: function() {
+        return this._queue.length - this._offset;
+      }
+    });
+
+    /**
+     * Remove all objects from the Queue.
+     */
+    Queue.prototype.clear = function() {
+      this._queue = [];
+      this._offset = 0;
+    };
+
+    /**
+     * Add an object to the end of the Queue.
+     *
+     * @param {Object} value An object.
+     * @throws {Error} If value can't pass the validation.
+     */
+    Queue.prototype.enqueue = function(value) {
+      if (this._validator && !this._validator(value)) {
+        w.error('Value not accepted: ' + value);
+      }
+      this._queue.push(value);
+    };
+
+    /**
+     * Remove the object at the beginning of the Queue and return it.
+     */
+    Queue.prototype.dequeue = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyDequeue) {
+          return undefined;
+        } else {
+          w.error('The queue is empty');
+        }
+      }
+      var item = this._queue[this._offset++];
+      if (this._offset * 2 > this._queue.length) {
+        this._queue = this._queue.slice(this._offset);
+        this._offset = 0;
+      }
+      return item;
+    };
+
+    /**
+     * Return the object at the beginning of the Queue without removing it.
+     */
+    Queue.prototype.peek = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyDequeue) {
+          return undefined;
+        } else {
+          w.error('Dequeueing an empty queue is not allowed');
+        }
+      }
+      return this._queue[this._offset];
+    };
+
+    return Queue;
+
+  })();
+
+  // $FOOTER$
+  return w;
+
+});
