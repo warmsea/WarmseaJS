@@ -14,8 +14,9 @@ results
 npm-debug.log
 node_modules
 
-.project
 .DS_Store
+.idea
+.project
 
 .sizecache.json
 jsdoc

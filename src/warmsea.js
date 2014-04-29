@@ -1,4 +1,3 @@
-// @formatter:off
 define([
   './core',
   './types',
@@ -8,9 +7,8 @@ define([
   './collections'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

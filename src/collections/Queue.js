@@ -1,15 +1,18 @@
-// @formatter:off
 define([
   '../core'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
-  /**
-   * Queue class. A Queue is a FIFO (First In, First Out) collection.
-   */
   w.Queue = (function() {
 
+    /**
+     * Queue class. A Queue is a FIFO (First In, First Out) collection.
+     *
+     * @class
+     * @name warmsea.Queue
+     * @param {?function} validator A value validation function.
+     */
     var Queue = function(validator) {
       this._validator = validator;
       this.clear();
@@ -25,6 +28,9 @@ define([
 
     /**
      * Remove all objects from the Queue.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.clear
      */
     Queue.prototype.clear = function() {
       this._queue = [];
@@ -34,6 +40,8 @@ define([
     /**
      * Add an object to the end of the Queue.
      *
+     * @method
+     * @name warmsea.Queue.prototype.enqueue
      * @param {Object} value An object.
      * @throws {Error} If value can't pass the validation.
      */
@@ -46,6 +54,10 @@ define([
 
     /**
      * Remove the object at the beginning of the Queue and return it.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.dequeue
+     * @return {*} The object at the beginning of the Queue.
      */
     Queue.prototype.dequeue = function() {
       if (this.length === 0) {
@@ -65,6 +77,10 @@ define([
 
     /**
      * Return the object at the beginning of the Queue without removing it.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.peek
+     * @return {*} The object at the beginning of the Queue.
      */
     Queue.prototype.peek = function() {
       if (this.length === 0) {
@@ -81,7 +97,6 @@ define([
 
   })();
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

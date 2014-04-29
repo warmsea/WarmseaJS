@@ -9,8 +9,8 @@ define([
   /**
    * Cast a value to a Boolean.
    *
-   * @param {?} value A value.
-   * @return {Boolean} The boolean value.
+   * @param {*} value A value.
+   * @return {boolean} The boolean value.
    */
   w.bool = function(value) {
     var v = value;
@@ -24,8 +24,8 @@ define([
   /**
    * Cast a value to an Integer.
    *
-   * @param {?} value A value.
-   * @return {Integer} The integer value.
+   * @param {*} value A value.
+   * @return {number} The integer value.
    */
   w.i = function(value, radix) {
     var v = value;
@@ -33,8 +33,7 @@ define([
       return 1;
     } else if (w.isObject(v) && '__int__' in v) {
       return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
-    } else if (!radix && w.isString(v) && //
-    (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
+    } else if (!radix && w.isString(v) && (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
       return parseInt(v, 16);
     } else if (!radix || radix === 10) {
       return Math.round(parseFloat(v));
@@ -46,8 +45,8 @@ define([
   /**
    * Cast a value to a Float.
    *
-   * @param {?} value A value.
-   * @return {Float} The float value.
+   * @param {*} value A value.
+   * @return {number} The float value.
    */
   w.f = function(value) {
     var v = value;
@@ -63,8 +62,8 @@ define([
   /**
    * Cast a value to a String.
    *
-   * @param {?} value A value.
-   * @return {String} The string value.
+   * @param {*} value A value.
+   * @return {string} The string value.
    */
   w.str = function(value) {
     var v = value;
@@ -77,11 +76,10 @@ define([
 
   /**
    * Cast a value to an Array.
+   * <p>
+   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an empty array will be returned.
    *
-   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an
-   * empty array will be returned.
-   *
-   * @param {?} value A value.
+   * @param {*} value A value.
    * @return {Array} The array value.
    */
   w.array = function(value) {
@@ -97,9 +95,8 @@ define([
   /**
    * Test whether a value is a number.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
   w.isNumber = function(value) {
     return typeof value === 'number';
@@ -108,9 +105,8 @@ define([
   /**
    * Test whether a value is a string.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
   w.isString = function(value) {
     return typeof value === 'string';
@@ -119,9 +115,8 @@ define([
   /**
    * Test whether a value is an array.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is an array;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is an array; <code>false</code>, otherwise.
    */
   w.isArray = function(value) {
     return value instanceof Array;
@@ -130,9 +125,8 @@ define([
   /**
    * Test whether a value is a function.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a function;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a function; <code>false</code>, otherwise.
    */
   w.isFunction = function(value) {
     return typeof value === 'function';
@@ -141,15 +135,12 @@ define([
   /**
    * Test whether a value is a plain object.
    * <p>
-   * ATTENSION: I'm not pretty sure whether this function works everywhere.
-   * Can anyone help me?
+   * ATTENSION: I'm not pretty sure whether this function works everywhere. Can anyone help me?
    * <p>
-   * A plain object is typically an object defined with <code>{}</code> or
-   * <code>new Object</code>.
+   * A plain object is typically an object defined with <code>{}</code> or <code>new Object</code>.
    *
-   * @param {?} value A value.
-   * @return {Object} <code>true</code>, if <code>value</code> is a plain
-   *         object; <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a plain object; <code>false</code>, otherwise.
    */
   w.isPlainObject = function(value) {
     if (String(value) !== '[object Object]') {
@@ -168,19 +159,15 @@ define([
   /**
    * Test whether a value is an object.
    * <p>
-   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass
-   * this test, everything else will.
+   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass this test, everything else will.
    * <p>
-   * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but
-   * <code>warmsea.isObject(null)</code> returns <code>false</code>. Because
-   * using a <code>null</code> object is always error-prone.
+   * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but <code>warmsea.isObject(null)</code> returns
+   * <code>false</code>. Because using a <code>null</code> object is always error-prone.
    * <p>
-   * Arrays pass both <code>warmsea.isArray()</code> and
-   * <code>warmsea.isObject()</code>.
+   * Arrays pass both <code>warmsea.isArray()</code> and <code>warmsea.isObject()</code>.
    *
-   * @param {?} value A value.
-   * @return {Object} <code>true</code>, if <code>value</code> is an object;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is an object; <code>false</code>, otherwise.
    */
   w.isObject = function(value) {
     return value !== null && typeof value === 'object';
@@ -188,5 +175,4 @@ define([
 
   // $FOOTER$
   return w;
-
 });

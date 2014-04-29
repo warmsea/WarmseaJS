@@ -1,8 +1,7 @@
-// @formatter:off
 define([
 ], function() {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
   /**
    * This will be the global <code>warmsea</code> namespace.
@@ -21,8 +20,8 @@ define([
   /**
    * An identity function.
    *
-   * @param {?} x A value.
-   * @return {?} <code>x</code> itself.
+   * @param {*} x A value.
+   * @returns{*} <code>x</code> itself.
    */
   w.identity = function(x) {
     return x;
@@ -43,19 +42,20 @@ define([
   /**
    * Throws an Error.
    *
-   * @param {String} msg The error message.
+   * @function
+   * @param {string} msg The error message.
    * @throws {Error} An error with a message.
    */
-  w.error = function(msg) {
+  w.error = w.error || function(msg) {
     throw new Error(msg);
   };
 
   /**
    * The default compare function
    *
-   * @param {?} a A value.
-   * @param {?} b Another value.
-   * @return {Number} 1, if a &gt; b; -1, if a &lt; b; 0, otherwise.
+   * @param {*} a A value.
+   * @param {*} b Another value.
+   * @returns{number} 1, if a &gt; b; -1, if a &lt; b; 0, otherwise.
    */
   w.cmp = function(a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
@@ -72,8 +72,8 @@ define([
    * Code: w.keys({a:1, b:2, c:3});
    * Result: ["a", "b", "c"]
    *
-   * @param {Object} obj An Object.
-   * @return {Array} The keys of the object.
+   * @param {object} obj An Object.
+   * @returns{Array} The keys of the object.
    */
   w.keys = function(obj) {
     var keys = [];
@@ -97,8 +97,8 @@ define([
    * Code: w.values({a:1, b:'hello', c:[1,2,3]});
    * Result: [1, "hello", [1, 2, 3]]
    *
-   * @param {Object} obj An object.
-   * @return {Array} The values of the object.
+   * @param {object} obj An object.
+   * @returns{Array} The values of the object.
    */
   w.values = function(obj) {
     var values = [];
@@ -135,27 +135,26 @@ define([
    * In-place stable sort.
    *
    * @param {Array} arr The array to be sorted.
-   * @param {Function} cmp The compare function; by default, it's w.cmp。
+   * @param {function} cmp The compare function; by default, it's w.cmp。
    * @return {Array} The sorted array.
    */
   w.sort = function(arr, cmp) {
     cmp = cmp || w.cmp;
     var i;
     var len = arr.length;
-    for ( i = 0; i < len; ++i) {
+    for (i = 0; i < len; ++i) {
       // _wssi stands for Warmsea Stable Sort Id
       arr[i]._wssi = i;
     }
     arr.sort(function(a, b) {
       return cmp(a, b) || a._wssi - b._wssi;
     });
-    for ( i = 0; i < len; ++i) {
+    for (i = 0; i < len; ++i) {
       delete arr[i]._wssi;
     }
     return arr;
   };
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

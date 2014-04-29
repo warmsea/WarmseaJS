@@ -1,17 +1,16 @@
-// @formatter:off
 define([
   '../core',
   '../types'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
   /**
    * Pad a string to a given length by adding leading characters.
    *
-   * @param {Number|String} value The value; usually a number.
-   * @param {Integer} length The wanted length. If not given, it's 2.
-   * @param {Character} leading The leading character. If not given, it's '0'.
+   * @param {number|string} value The value; usually a number.
+   * @param {int} length The wanted length. If not given, it's 2.
+   * @param {string} leading The leading character. If not given, it's '0'.
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
@@ -67,7 +66,7 @@ define([
    * determines the number of digits after the decimal point and defaults to 6.
    * <p>
    * "length" is one of "h", "l" or "L". But it is ignored as it is not
-   * neccessary for JavaScript.
+   * necessary for JavaScript.
    * <p>
    * Available conversion types are listed below:<br>
    * <table><thead>
@@ -113,7 +112,10 @@ define([
    * <code>warmsea.float()</code> for floats, <code>warmsea.string()</code>
    * for strings.
    *
-   * @param {String|Function} format the format string.
+   * @function
+   * @param {string|function} format the format string.
+   * @param {...*} args Arguments one by one, or a list.
+   * @return {string} The formatted string.
    */
   w.format = (function(w) {
 
@@ -132,12 +134,12 @@ define([
         params = Array.prototype.slice.call(arguments, 1);
       }
 
-      var convertor = new FormatConvertor(params);
+      var converter = new FormatConverter(params);
 
       var specifiers = /%(?:\((.*?)\))?([#|0|\-| |\+]+)?(\d+|\*)?(?:.(\d+|\*))?(?:[h|l|L])?(.)?/g;
 
       format = format.replace(specifiers, function() {
-        return FormatConvertor.prototype.convert.apply(convertor, arguments);
+        return FormatConverter.prototype.convert.apply(converter, arguments);
       });
 
       return format;
@@ -170,7 +172,7 @@ define([
         startIndex = i;
         endTag = start[1];
         var optionTags = (start[2] || '').split(/[ \t]*,[ \t]*/);
-        for ( j = 0; j < optionTags.length; ++j) {
+        for (j = 0; j < optionTags.length; ++j) {
           var tag = optionTags[j].toLowerCase().split(/-(.*)/);
           if (tag[0]) {
             options[tag[0]] = tag[1] || true;
@@ -236,7 +238,7 @@ define([
           w.error('Format failed: Unsupported WS option');
       }
 
-      for ( i = 0, len = result.length; i < len; ++i) {
+      for (i = 0, len = result.length; i < len; ++i) {
         result[i] = wsFunc(result[i]);
       }
 
@@ -248,7 +250,7 @@ define([
      *
      * @see warmsea#format
      */
-    var FormatConvertor = function(params) {
+    var FormatConverter = function(params) {
       this.params = params || [];
       this.index = 0;
     };
@@ -258,8 +260,7 @@ define([
      *
      * @see warmsea#format
      */
-    FormatConvertor.prototype.convert = function(
-        specifier, key, flags, width, precision, type, position) {
+    FormatConverter.prototype.convert = function(specifier, key, flags, width, precision, type, position) {
       if (type === undefined) {
         w.error('format incomplete specifier "%s" in position (%d).', specifier, position);
       }
@@ -305,7 +306,7 @@ define([
         '0': flags.indexOf('0') >= 0 && flags.indexOf('-') < 0,
         '-': flags.indexOf('-') >= 0,
         ' ': flags.indexOf(' ') >= 0 && flags.indexOf('+') < 0,
-        '+': flags.indexOf('+') >= 0,
+        '+': flags.indexOf('+') >= 0
       };
 
       return this.convertors[type](value, flags, width, precision);
@@ -314,18 +315,18 @@ define([
     /**
      * The convertors of each type.
      */
-    FormatConvertor.prototype.convertors = {
-      'd': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('d', value, flags, width);
+    FormatConverter.prototype.convertors = {
+      'd': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('d', value, flags, width);
       },
-      'o': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('o', value, flags, width);
+      'o': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('o', value, flags, width);
       },
-      'x': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('x', value, flags, width);
+      'x': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('x', value, flags, width);
       },
-      'X': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('X', value, flags, width);
+      'X': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('X', value, flags, width);
       },
       'f': function(value, flags, width, precision) {
         value = w.f(value);
@@ -343,7 +344,7 @@ define([
           return w.pad('', gap, ' ') + sign + value;
         }
       },
-      's': function(value, flags, width /*, precision */ ) {
+      's': function(value, flags, width /*, precision */) {
         value = w.str(value);
         var gap = w.max(0, width - value.length);
         if (flags['-']) {
@@ -395,7 +396,6 @@ define([
 
   })(w);
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

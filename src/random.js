@@ -1,16 +1,15 @@
-// @formatter:off
 define([
   './core',
   './types',
   './math'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
   /**
    * Choose a random floating-point number in the range of [0.0, 1.0).
    *
-   * @return {Number} A floating-point number in the range of [0.0, 1.0).
+   * @return {number} A floating-point number in the range of [0.0, 1.0).
    */
   w.random = function() {
     return Math.random();
@@ -21,9 +20,9 @@ define([
    * <p>
    * If end is not passed, the range will be [0, start).
    *
-   * @param {Integer} start start of the range.
-   * @param {Integer} end end of the range.
-   * @return {Integer} A random integer in the range.
+   * @param {number} start start of the range.
+   * @param {number} stop end of the range.
+   * @return {number} A random integer in the range.
    */
   w.randomInt = function(start, stop) {
     if (start === undefined && stop === undefined) {
@@ -48,9 +47,9 @@ define([
    * <p>
    * If end is not passed, the range will be [0, start).
    *
-   * @param {Integer} start start of the range.
-   * @param {Integer} end end of the range.
-   * @return {Integer} A random number in the range.
+   * @param {number} start start of the range.
+   * @param {number} end end of the range.
+   * @return {number} A random number in the range.
    */
   w.randomFloat = function(start, stop) {
     if (start === undefined && stop === undefined) {
@@ -73,8 +72,8 @@ define([
    * <code>abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789</code>.
    * And by default, the string has 8 characters.
    *
-   * @param {Integer} length The length of the string. Default to 8.
-   * @param {String} allowedChars The allowed characters in the string.
+   * @param {number} length The length of the string. Default to 8.
+   * @param {string} allowedChars The allowed characters in the string.
    */
   w.randomString = function(length, allowedChars) {
     if (length === undefined) {
@@ -96,7 +95,6 @@ define([
     return res;
   };
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

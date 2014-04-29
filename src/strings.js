@@ -1,12 +1,10 @@
-// @formatter:off
 define([
   './core',
   './strings/format'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

@@ -1,16 +1,15 @@
-// @formatter:off
 define([
-  './core',
+  './core'
 ], function(w) {
   'use strict';
-// @formatter:on $HEADER$
+// $HEADER$
 
   /**
    * Return the smallest value.
    *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The smallest value.
+   * @param {function} cmp A optional compare function.
+   * @param {*} values Values as an array or a list of arguments.
+   * @return {*} The smallest value.
    */
   w.min = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
@@ -40,9 +39,9 @@ define([
   /**
    * Return the largest value.
    *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The largest value.
+   * @param {function} cmp A optional compare function.
+   * @param {*} values Values as an array or a list of arguments.
+   * @return {*} The largest value.
    */
   w.max = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
@@ -69,7 +68,6 @@ define([
     return max;
   };
 
-  // $FOOTER$
+// $FOOTER$
   return w;
-
 });

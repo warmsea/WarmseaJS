@@ -104,7 +104,8 @@ module.exports = function(grunt) {'use strict';
             'module': false,
             'ok': false,
             'strictEqual': false,
-            'test': false
+            'test': false,
+            'throws': false
           }
         }
       },
