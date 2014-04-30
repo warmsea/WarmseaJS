@@ -25,6 +25,7 @@ define([
    * Cast a value to an Integer.
    *
    * @param {*} value A value.
+   * @param {number} radix An integer between 2 and 32.
    * @return {number} The integer value.
    */
   w.i = function(value, radix) {
@@ -100,6 +101,20 @@ define([
    */
   w.isNumber = function(value) {
     return typeof value === 'number';
+  };
+
+  /**
+   * Test whether a value is an integer.
+   * <p>
+   * JavaScript has only one number type, that is 64-bit floating-point number. So we test whether the value is an
+   * integer in that system. Which means 1.0 and 1 are both integers, but 9007199254740994 is not an integer because it
+   * exceeds the max integer value a 64-bit floating-point number can present (±2^53).
+   *
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
+   */
+  w.isInteger = function(value) {
+    return typeof value === 'number' && value % 1 === 0 && value >= -9007199254740992 && value <= 9007199254740992;
   };
 
   /**

@@ -23,6 +23,9 @@ define(function() {
     trueCases = [0, 1, 0xabcedf, 1.1, 1e3, NaN, Infinity, Number(1)];
     falseCases = [undefined, null, false, true, '123', [], {}];
     testTypeChecker('warmsea.isNumber()', w.isNumber, trueCases, falseCases);
+    trueCases = [0, 1, -1, 0xabcedf, 1e3, Number(1)];
+    falseCases = [undefined, null, false, true, 1.1, NaN, Infinity, 9007199254740994, -9007199254740994, '1', [], {}];
+    testTypeChecker('warmsea.isInteger()', w.isInteger, trueCases, falseCases);
     trueCases = ['', '1', 'a\nb', ( typeof 1), String(1)];
     falseCases = [undefined, null, 123, /a/];
     testTypeChecker('warmsea.isString()', w.isString, trueCases, falseCases);
