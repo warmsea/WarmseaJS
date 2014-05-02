@@ -68,7 +68,7 @@ define([
         }
       }
       var item = this._queue[this._offset++];
-      if (this._offset * 2 > this._queue.length) {
+      if (this._offset > 16 && this._offset * 2 > this._queue.length) {
         this._queue = this._queue.slice(this._offset);
         this._offset = 0;
       }

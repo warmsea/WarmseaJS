@@ -113,7 +113,7 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
-  w.isInteger = function(value) {
+  w.isInt = function(value) {
     return typeof value === 'number' && value % 1 === 0 && value >= -9007199254740992 && value <= 9007199254740992;
   };
 

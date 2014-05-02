@@ -1,6 +1,7 @@
 define([
   './core',
-  './collections/Queue'
+  './collections/Queue',
+  './Collections/Stack'
 ], function(w) {
   'use strict';
 // $HEADER$
