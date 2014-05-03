@@ -4,7 +4,7 @@
  * Copyright 2009, 2014 Su Su
  * Released under the MIT license
  *
- * Date: 2014-04-19
+ * Date: 2014-05-03
  */
 
 (function(global) {
@@ -27,8 +27,8 @@
   /**
    * An identity function.
    *
-   * @param {?} x A value.
-   * @return {?} <code>x</code> itself.
+   * @param {*} x A value.
+   * @returns{*} <code>x</code> itself.
    */
   w.identity = function(x) {
     return x;
@@ -49,19 +49,20 @@
   /**
    * Throws an Error.
    *
-   * @param {String} msg The error message.
+   * @function
+   * @param {string} msg The error message.
    * @throws {Error} An error with a message.
    */
-  w.error = function(msg) {
+  w.error = w.error || function(msg) {
     throw new Error(msg);
   };
 
   /**
    * The default compare function
    *
-   * @param {?} a A value.
-   * @param {?} b Another value.
-   * @return {Number} 1, if a &gt; b; -1, if a &lt; b; 0, otherwise.
+   * @param {*} a A value.
+   * @param {*} b Another value.
+   * @returns{number} 1, if a &gt; b; -1, if a &lt; b; 0, otherwise.
    */
   w.cmp = function(a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
@@ -78,8 +79,8 @@
    * Code: w.keys({a:1, b:2, c:3});
    * Result: ["a", "b", "c"]
    *
-   * @param {Object} obj An Object.
-   * @return {Array} The keys of the object.
+   * @param {object} obj An Object.
+   * @returns{Array} The keys of the object.
    */
   w.keys = function(obj) {
     var keys = [];
@@ -103,8 +104,8 @@
    * Code: w.values({a:1, b:'hello', c:[1,2,3]});
    * Result: [1, "hello", [1, 2, 3]]
    *
-   * @param {Object} obj An object.
-   * @return {Array} The values of the object.
+   * @param {object} obj An object.
+   * @returns{Array} The values of the object.
    */
   w.values = function(obj) {
     var values = [];
@@ -141,21 +142,21 @@
    * In-place stable sort.
    *
    * @param {Array} arr The array to be sorted.
-   * @param {Function} cmp The compare function; by default, it's w.cmp。
+   * @param {function} cmp The compare function; by default, it's w.cmp。
    * @return {Array} The sorted array.
    */
   w.sort = function(arr, cmp) {
     cmp = cmp || w.cmp;
     var i;
     var len = arr.length;
-    for ( i = 0; i < len; ++i) {
+    for (i = 0; i < len; ++i) {
       // _wssi stands for Warmsea Stable Sort Id
       arr[i]._wssi = i;
     }
     arr.sort(function(a, b) {
       return cmp(a, b) || a._wssi - b._wssi;
     });
-    for ( i = 0; i < len; ++i) {
+    for (i = 0; i < len; ++i) {
       delete arr[i]._wssi;
     }
     return arr;
@@ -164,9 +165,9 @@
   /**
    * Return the smallest value.
    *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The smallest value.
+   * @param {function} cmp A optional compare function.
+   * @param {*} values Values as an array or a list of arguments.
+   * @return {*} The smallest value.
    */
   w.min = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
@@ -196,9 +197,9 @@
   /**
    * Return the largest value.
    *
-   * @param {Function} cmp A optional compare function.
-   * @param {?} values Values as an array or a list of arguments.
-   * @return {?} The largest value.
+   * @param {function} cmp A optional compare function.
+   * @param {*} values Values as an array or a list of arguments.
+   * @return {*} The largest value.
    */
   w.max = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
@@ -228,8 +229,8 @@
   /**
    * Cast a value to a Boolean.
    *
-   * @param {?} value A value.
-   * @return {Boolean} The boolean value.
+   * @param {*} value A value.
+   * @return {boolean} The boolean value.
    */
   w.bool = function(value) {
     var v = value;
@@ -243,8 +244,9 @@
   /**
    * Cast a value to an Integer.
    *
-   * @param {?} value A value.
-   * @return {Integer} The integer value.
+   * @param {*} value A value.
+   * @param {number} radix An integer between 2 and 32.
+   * @return {number} The integer value.
    */
   w.i = function(value, radix) {
     var v = value;
@@ -252,8 +254,7 @@
       return 1;
     } else if (w.isObject(v) && '__int__' in v) {
       return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
-    } else if (!radix && w.isString(v) && //
-    (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
+    } else if (!radix && w.isString(v) && (v.indexOf('0x') === 0 || v.indexOf('0X') === 0)) {
       return parseInt(v, 16);
     } else if (!radix || radix === 10) {
       return Math.round(parseFloat(v));
@@ -265,8 +266,8 @@
   /**
    * Cast a value to a Float.
    *
-   * @param {?} value A value.
-   * @return {Float} The float value.
+   * @param {*} value A value.
+   * @return {number} The float value.
    */
   w.f = function(value) {
     var v = value;
@@ -282,8 +283,8 @@
   /**
    * Cast a value to a String.
    *
-   * @param {?} value A value.
-   * @return {String} The string value.
+   * @param {*} value A value.
+   * @return {string} The string value.
    */
   w.str = function(value) {
     var v = value;
@@ -296,11 +297,10 @@
 
   /**
    * Cast a value to an Array.
+   * <p>
+   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an empty array will be returned.
    *
-   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an
-   * empty array will be returned.
-   *
-   * @param {?} value A value.
+   * @param {*} value A value.
    * @return {Array} The array value.
    */
   w.array = function(value) {
@@ -316,20 +316,32 @@
   /**
    * Test whether a value is a number.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
   w.isNumber = function(value) {
     return typeof value === 'number';
   };
 
   /**
+   * Test whether a value is an integer.
+   * <p>
+   * JavaScript has only one number type, that is 64-bit floating-point number. So we test whether the value is an
+   * integer in that system. Which means 1.0 and 1 are both integers, but 9007199254740994 is not an integer because it
+   * exceeds the max integer value a 64-bit floating-point number can present (±2^53).
+   *
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
+   */
+  w.isInt = function(value) {
+    return typeof value === 'number' && value % 1 === 0 && value >= -9007199254740992 && value <= 9007199254740992;
+  };
+
+  /**
    * Test whether a value is a string.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a string;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
   w.isString = function(value) {
     return typeof value === 'string';
@@ -338,9 +350,8 @@
   /**
    * Test whether a value is an array.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is an array;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is an array; <code>false</code>, otherwise.
    */
   w.isArray = function(value) {
     return value instanceof Array;
@@ -349,9 +360,8 @@
   /**
    * Test whether a value is a function.
    *
-   * @param {?} value A value.
-   * @return {Boolean} <code>true</code>, if <code>value</code> is a function;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a function; <code>false</code>, otherwise.
    */
   w.isFunction = function(value) {
     return typeof value === 'function';
@@ -360,15 +370,12 @@
   /**
    * Test whether a value is a plain object.
    * <p>
-   * ATTENSION: I'm not pretty sure whether this function works everywhere.
-   * Can anyone help me?
+   * ATTENSION: I'm not pretty sure whether this function works everywhere. Can anyone help me?
    * <p>
-   * A plain object is typically an object defined with <code>{}</code> or
-   * <code>new Object</code>.
+   * A plain object is typically an object defined with <code>{}</code> or <code>new Object</code>.
    *
-   * @param {?} value A value.
-   * @return {Object} <code>true</code>, if <code>value</code> is a plain
-   *         object; <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is a plain object; <code>false</code>, otherwise.
    */
   w.isPlainObject = function(value) {
     if (String(value) !== '[object Object]') {
@@ -387,19 +394,15 @@
   /**
    * Test whether a value is an object.
    * <p>
-   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass
-   * this test, everything else will.
+   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass this test, everything else will.
    * <p>
-   * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but
-   * <code>warmsea.isObject(null)</code> returns <code>false</code>. Because
-   * using a <code>null</code> object is always error-prone.
+   * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but <code>warmsea.isObject(null)</code> returns
+   * <code>false</code>. Because using a <code>null</code> object is always error-prone.
    * <p>
-   * Arrays pass both <code>warmsea.isArray()</code> and
-   * <code>warmsea.isObject()</code>.
+   * Arrays pass both <code>warmsea.isArray()</code> and <code>warmsea.isObject()</code>.
    *
-   * @param {?} value A value.
-   * @return {Object} <code>true</code>, if <code>value</code> is an object;
-   *         <code>false</code>, otherwise.
+   * @param {*} value A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is an object; <code>false</code>, otherwise.
    */
   w.isObject = function(value) {
     return value !== null && typeof value === 'object';
@@ -408,9 +411,9 @@
   /**
    * Pad a string to a given length by adding leading characters.
    *
-   * @param {Number|String} value The value; usually a number.
-   * @param {Integer} length The wanted length. If not given, it's 2.
-   * @param {Character} leading The leading character. If not given, it's '0'.
+   * @param {number|string} value The value; usually a number.
+   * @param {int} length The wanted length. If not given, it's 2.
+   * @param {string} leading The leading character. If not given, it's '0'.
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
@@ -466,7 +469,7 @@
    * determines the number of digits after the decimal point and defaults to 6.
    * <p>
    * "length" is one of "h", "l" or "L". But it is ignored as it is not
-   * neccessary for JavaScript.
+   * necessary for JavaScript.
    * <p>
    * Available conversion types are listed below:<br>
    * <table><thead>
@@ -512,7 +515,10 @@
    * <code>warmsea.float()</code> for floats, <code>warmsea.string()</code>
    * for strings.
    *
-   * @param {String|Function} format the format string.
+   * @function
+   * @param {string|function} format the format string.
+   * @param {...*} args Arguments one by one, or a list.
+   * @return {string} The formatted string.
    */
   w.format = (function(w) {
 
@@ -531,12 +537,12 @@
         params = Array.prototype.slice.call(arguments, 1);
       }
 
-      var convertor = new FormatConvertor(params);
+      var converter = new FormatConverter(params);
 
       var specifiers = /%(?:\((.*?)\))?([#|0|\-| |\+]+)?(\d+|\*)?(?:.(\d+|\*))?(?:[h|l|L])?(.)?/g;
 
       format = format.replace(specifiers, function() {
-        return FormatConvertor.prototype.convert.apply(convertor, arguments);
+        return FormatConverter.prototype.convert.apply(converter, arguments);
       });
 
       return format;
@@ -569,7 +575,7 @@
         startIndex = i;
         endTag = start[1];
         var optionTags = (start[2] || '').split(/[ \t]*,[ \t]*/);
-        for ( j = 0; j < optionTags.length; ++j) {
+        for (j = 0; j < optionTags.length; ++j) {
           var tag = optionTags[j].toLowerCase().split(/-(.*)/);
           if (tag[0]) {
             options[tag[0]] = tag[1] || true;
@@ -635,7 +641,7 @@
           w.error('Format failed: Unsupported WS option');
       }
 
-      for ( i = 0, len = result.length; i < len; ++i) {
+      for (i = 0, len = result.length; i < len; ++i) {
         result[i] = wsFunc(result[i]);
       }
 
@@ -647,7 +653,7 @@
      *
      * @see warmsea#format
      */
-    var FormatConvertor = function(params) {
+    var FormatConverter = function(params) {
       this.params = params || [];
       this.index = 0;
     };
@@ -657,8 +663,7 @@
      *
      * @see warmsea#format
      */
-    FormatConvertor.prototype.convert = function(
-        specifier, key, flags, width, precision, type, position) {
+    FormatConverter.prototype.convert = function(specifier, key, flags, width, precision, type, position) {
       if (type === undefined) {
         w.error('format incomplete specifier "%s" in position (%d).', specifier, position);
       }
@@ -704,7 +709,7 @@
         '0': flags.indexOf('0') >= 0 && flags.indexOf('-') < 0,
         '-': flags.indexOf('-') >= 0,
         ' ': flags.indexOf(' ') >= 0 && flags.indexOf('+') < 0,
-        '+': flags.indexOf('+') >= 0,
+        '+': flags.indexOf('+') >= 0
       };
 
       return this.convertors[type](value, flags, width, precision);
@@ -713,18 +718,18 @@
     /**
      * The convertors of each type.
      */
-    FormatConvertor.prototype.convertors = {
-      'd': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('d', value, flags, width);
+    FormatConverter.prototype.convertors = {
+      'd': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('d', value, flags, width);
       },
-      'o': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('o', value, flags, width);
+      'o': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('o', value, flags, width);
       },
-      'x': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('x', value, flags, width);
+      'x': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('x', value, flags, width);
       },
-      'X': function(value, flags, width /*, precision */ ) {
-        return FormatConvertor.prototype.convertors.ic('X', value, flags, width);
+      'X': function(value, flags, width /*, precision */) {
+        return FormatConverter.prototype.convertors.ic('X', value, flags, width);
       },
       'f': function(value, flags, width, precision) {
         value = w.f(value);
@@ -742,7 +747,7 @@
           return w.pad('', gap, ' ') + sign + value;
         }
       },
-      's': function(value, flags, width /*, precision */ ) {
+      's': function(value, flags, width /*, precision */) {
         value = w.str(value);
         var gap = w.max(0, width - value.length);
         if (flags['-']) {
@@ -798,7 +803,7 @@
   /**
    * Choose a random floating-point number in the range of [0.0, 1.0).
    *
-   * @return {Number} A floating-point number in the range of [0.0, 1.0).
+   * @return {number} A floating-point number in the range of [0.0, 1.0).
    */
   w.random = function() {
     return Math.random();
@@ -809,9 +814,9 @@
    * <p>
    * If end is not passed, the range will be [0, start).
    *
-   * @param {Integer} start start of the range.
-   * @param {Integer} end end of the range.
-   * @return {Integer} A random integer in the range.
+   * @param {number} start start of the range.
+   * @param {number} stop end of the range.
+   * @return {number} A random integer in the range.
    */
   w.randomInt = function(start, stop) {
     if (start === undefined && stop === undefined) {
@@ -836,9 +841,9 @@
    * <p>
    * If end is not passed, the range will be [0, start).
    *
-   * @param {Integer} start start of the range.
-   * @param {Integer} end end of the range.
-   * @return {Integer} A random number in the range.
+   * @param {number} start start of the range.
+   * @param {number} end end of the range.
+   * @return {number} A random number in the range.
    */
   w.randomFloat = function(start, stop) {
     if (start === undefined && stop === undefined) {
@@ -861,8 +866,8 @@
    * <code>abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789</code>.
    * And by default, the string has 8 characters.
    *
-   * @param {Integer} length The length of the string. Default to 8.
-   * @param {String} allowedChars The allowed characters in the string.
+   * @param {number} length The length of the string. Default to 8.
+   * @param {string} allowedChars The allowed characters in the string.
    */
   w.randomString = function(length, allowedChars) {
     if (length === undefined) {
@@ -883,6 +888,197 @@
     }
     return res;
   };
+
+  w.Queue = (function() {
+
+    /**
+     * Queue class. A Queue is a FIFO (First In, First Out) collection.
+     *
+     * @class
+     * @name warmsea.Queue
+     * @param {?function} validator A value validation function.
+     */
+    var Queue = function(validator) {
+      this._validator = validator;
+      this.clear();
+      this.allowEmptyDequeue = true;
+    };
+
+    Object.defineProperty(Queue.prototype, 'length', {
+      enumerable: true,
+      get: function() {
+        return this._queue.length - this._offset;
+      }
+    });
+
+    /**
+     * Remove all objects from the Queue.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.clear
+     */
+    Queue.prototype.clear = function() {
+      this._queue = [];
+      this._offset = 0;
+    };
+
+    /**
+     * Add an object to the end of the Queue.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.enqueue
+     * @param {Object} value An object.
+     * @throws {Error} If value can't pass the validation.
+     */
+    Queue.prototype.enqueue = function(value) {
+      if (this._validator && !this._validator(value)) {
+        w.error('Value not accepted: ' + value);
+      }
+      this._queue.push(value);
+    };
+
+    /**
+     * Remove the object at the beginning of the Queue and return it.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.dequeue
+     * @return {*} The object at the beginning of the Queue.
+     */
+    Queue.prototype.dequeue = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyDequeue) {
+          return undefined;
+        } else {
+          w.error('The queue is empty');
+        }
+      }
+      var item = this._queue[this._offset++];
+      if (this._offset > 16 && this._offset * 2 > this._queue.length) {
+        this._queue = this._queue.slice(this._offset);
+        this._offset = 0;
+      }
+      return item;
+    };
+
+    /**
+     * Return the object at the beginning of the Queue without removing it.
+     *
+     * @method
+     * @name warmsea.Queue.prototype.peek
+     * @return {*} The object at the beginning of the Queue.
+     */
+    Queue.prototype.peek = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyDequeue) {
+          return undefined;
+        } else {
+          w.error('Dequeueing an empty queue is not allowed');
+        }
+      }
+      return this._queue[this._offset];
+    };
+
+    return Queue;
+
+  })();
+
+  w.Stack = (function() {
+
+    /**
+     * Stack class. A Stack is a FILO (First In, Last Out) collection.
+     *
+     * @class
+     * @name warmsea.Stack
+     * @param {?function} validator A value validation function.
+     */
+    var Stack = function(validator) {
+      this._validator = validator;
+      this.clear();
+      this.allowEmptyPop = true;
+    };
+
+    Object.defineProperty(Stack.prototype, 'length', {
+      enumerable: true,
+      get: function() {
+        return this._top + 1;
+      }
+    });
+
+    /**
+     * Remove all objects from the Stack.
+     *
+     * @method
+     * @name warmsea.Stack.prototype.clear
+     */
+    Stack.prototype.clear = function() {
+      this._stack = [];
+      this._top = -1;
+    };
+
+    /**
+     * Add an object to the top of the Stack.
+     *
+     * @method
+     * @name warmsea.Stack.prototype.push
+     * @param {Object} value An object.
+     * @throws {Error} If value can't pass the validation.
+     */
+    Stack.prototype.push = function(value) {
+      if (this._validator && !this._validator(value)) {
+        w.error('Value not accepted: ' + value);
+      }
+      this._top++;
+      if (this._top < this.length) {
+        this._stack[this._top] = value;
+      } else {
+        this._stack.push(value);
+      }
+    };
+
+    /**
+     * Remove the object at the top of the Stack and return it.
+     *
+     * @method
+     * @name warmsea.Stack.prototype.pop
+     * @return {*} The object at the top of the Stack.
+     */
+    Stack.prototype.pop = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyPop) {
+          return undefined;
+        } else {
+          w.error('The stack is empty');
+        }
+      }
+      var item = this._stack[this._top--];
+      if (this._top > 16 && this._top * 2 < this._stack.length) {
+        this._stack = this._stack.slice(0, this._top + 1);
+      }
+      return item;
+    };
+
+    /**
+     * Return the object at the top of the Stack without removing it.
+     *
+     * @method
+     * @name warmsea.Stack.prototype.peek
+     * @return {*} The object at the top of the Stack.
+     */
+    Stack.prototype.peek = function() {
+      if (this.length === 0) {
+        if (this.allowEmptyPop) {
+          return undefined;
+        } else {
+          w.error('Popping an empty stack is not allowed');
+        }
+      }
+      return this._stack[this._top];
+    };
+
+    return Stack;
+
+  })();
+
 
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
