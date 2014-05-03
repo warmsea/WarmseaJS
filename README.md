@@ -9,6 +9,7 @@ Features
 
 1. Type casting and testing
 2. String formatting
+3. Collections
 3. And some other features
 
 There is a brief introduction below.
@@ -20,9 +21,9 @@ Get Started
 -----------
 
 Download **WarmseaJS**:
-* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.3.0.min.js)
-* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.3.0.js)
-* [The full source code package, as a ZIP file](https://github.com/warmsea/WarmseaJS/releases/download/v0.3.0/warmseajs-v0.3.0.zip)
+* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.4.0.min.js)
+* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.4.0.js)
+* [The full source code package, as a ZIP file](https://github.com/warmsea/WarmseaJS/releases/download/v0.4.0/warmseajs-v0.4.0.zip)
 
 Include the JS file with `<script>` tag or [**RequireJS**](http://requirejs.org/).
 When included with `<script>` tag, a global namespace `warmsea` will be
@@ -67,6 +68,7 @@ contains the following functions:
 * warmsea.str(value)
 * warmsea.array(value)
 * warmsea.isNumber(value)
+* warmsea.isInt(value)
 * warmsea.isString(value)
 * warmsea.isArray(value)
 * warmsea.isFunction(value)
@@ -90,6 +92,7 @@ w.array('hello');  // ['hello']
 // type testing
 w.isNumber(0xff);             // true
 w.isNumber('0xff');           // false
+w.isInt(1);                   // true
 w.isString('0xff');           // true
 w.isArray([]);                // true
 w.isFunction(w.isFunction);   // true
@@ -153,24 +156,60 @@ w.format(function() {
 ```
 
 
+Collections features
+====================
+
+A """warmsea.Queue""" class and a """warmsea.Stack""" faster than native arrays.
+
+"""javascript
+var queue = new w.Queue();
+queue.enqueue('a');
+queue.enqueue('b');
+queue.length;                     // 2
+queue.peek();                     // 'a'
+queue.dequeue();                  // 'a'
+queue.length;                     // 1
+queue.clear();
+queue.dequeue();                  // undefined
+queue.allowEmptyDequeue = false;
+queue.dequeue();                  // throws an Error
+
+var stack = new w.Stack();
+stack.allowEmptyPop = false;
+stack.push('a');
+stack.push('b');
+stack.pop();                      // 'b'
+stack.peek();                     // 'a'
+stack.length;                     // 1
+stack.clear();
+stack.pop();                      // throws an Error
+"""
+
+
 Other features
 --------------
 
 There is a few other functions.
 
-Function                   | Description
--------------------------- | -----------
-w.noop()                   | An empty function
-w.identify(value)          | Retures value itself*
-w.unimplemented()          | Throws an error*
-w.error(msg)               | Throws an error with a message*
-w.cmp(a, b)                | Compare values with `>` and `<`
-w.keys(obj)                | Returns keys of an object
-w.values(obj)              | Returns values of an object
-w.range(start, stop, step) | Generates an array
-w.sort(arr, cmp)           | An in-place stable sorter
-w.max(...)                 | Returns the maximum value
-w.min(...)                 | Returns the minimum value
+Function                             | Description
+------------------------------------ | -----------
+w.noop()                             | An empty function
+w.identify(value)                    | Retures value itself*
+w.unimplemented()                    | Throws an error*
+w.error(msg)                         | Throws an error with a message*
+w.cmp(a, b)                          | Compare values with `>` and `<`
+w.keys(obj)                          | Returns keys of an object
+w.values(obj)                        | Returns values of an object
+w.range(start, stop, step)           | Generates an array
+w.sort(arr, cmp)                     | An in-place stable sorter
+w.max(...)                           | Returns the maximum value
+w.min(...)                           | Returns the minimum value
+w.random()                           | Returns a random number in [0, 1)
+w.randomInt(stop)                    | Returns an integer in [0, stop)
+w.randomInt(start, stop)             | Returns an integer in [start, stop)
+w.randomFloat(stop)                  | Returns a number in [0, stop)
+w.randomFloat(start, stop)           | Returns a number in [start, stop)
+w.randomString(length, allowedChars) | Returns a random string
 
 Examples:
 
@@ -194,4 +233,6 @@ function func = function() {
 }
 w.min(func, [2, 3, 5, 8, 13]);  // 13
 w.min(func, 2, 3, 5, 8, 13);    // 13
+
+w.randomString(4, 'abcd');      // something like 'ccad'
 ```
