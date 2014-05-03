@@ -159,7 +159,7 @@ w.format(function() {
 Collections features
 ====================
 
-A """warmsea.Queue""" class and a """warmsea.Stack""" faster than native arrays.
+A ```warmsea.Queue``` class and a ```warmsea.Stack``` faster than native arrays.
 
 """javascript
 var queue = new w.Queue();
