@@ -45,7 +45,7 @@ The first official release after refactoring.
 New Features
 ------------
 
-* <script> support and RequireJS support
+* ```<script>``` support and RequireJS support
 * Core
   * w - (*warmsea, the namespace*)
   * w.noop()
