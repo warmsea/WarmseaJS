@@ -80,7 +80,7 @@ define([
       length = 8;
     } else {
       length = w.i(length);
-      length = w.max(length, 0);
+      length = w.max([length, 0]);
     }
     if (allowedChars === undefined) {
       allowedChars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';

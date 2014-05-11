@@ -35,6 +35,7 @@ define([
     }
     return min;
   };
+  w.min = _.min;
 
   /**
    * Return the largest value.
@@ -67,6 +68,7 @@ define([
     }
     return max;
   };
+  w.max = _.max;
 
 // $FOOTER$
   return w;

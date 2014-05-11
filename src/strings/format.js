@@ -14,7 +14,7 @@ define([
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
-    length = w.max(0, length === undefined ? 2 : length, value.length);
+    length = w.max([0, length === undefined ? 2 : length, value.length]);
     leading = w.str(leading || '0');
     var a = new Array(Math.ceil((length - value.length) / leading.length) + 1);
     return a.join(leading).substring(0, length - value.length) + value;
@@ -335,7 +335,7 @@ define([
         if (flags['#'] && precision === 0) {
           value += '.';
         }
-        var gap = w.max(0, width - value.length - sign.length);
+        var gap = w.max([0, width - value.length - sign.length]);
         if (flags['-']) {
           return sign + value + w.pad('', gap, ' ');
         } else if (flags['0']) {
@@ -346,7 +346,7 @@ define([
       },
       's': function(value, flags, width /*, precision */) {
         value = w.str(value);
-        var gap = w.max(0, width - value.length);
+        var gap = w.max([0, width - value.length]);
         if (flags['-']) {
           return value + w.pad('', gap, ' ');
         } else {
@@ -376,7 +376,7 @@ define([
           'x': 16,
           'X': 16
         }[type]);
-        var gap = w.max(0, width - prefix.length - value.length - sign.length);
+        var gap = w.max([0, width - prefix.length - value.length - sign.length]);
         var result = '';
         if (flags['-']) {
           result = sign + prefix + value + w.pad('', gap, ' ');

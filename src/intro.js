@@ -7,6 +7,13 @@
  * Date: $DATE$
  */
 
+
+//// START OF THE underscore.js SOURCE CODE
+
+$UNDERSCORE$
+//// END OF THE underscore.js SOURCE CODE
+
+
 (function(global) {
   'use strict';
 

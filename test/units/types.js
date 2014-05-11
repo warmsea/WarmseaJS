@@ -128,6 +128,63 @@ define(function() {
       equal(w.str(obj), '9');
     });
 
+    test('warmsea.deepcopy()', function() {
+      strictEqual(w.deepcopy(), undefined);
+      equal(w.deepcopy(1), 1);
+      equal(w.deepcopy('a'), 'a');
+      var arrA = [1, 2];
+      var arrB = w.deepcopy(arrA);
+      arrB[1] = 3;
+      equal(arrA[1], 2);
+      var objA = {
+        'a' : {
+          'b' : {
+            'c': 1
+          }
+        }
+      };
+      var objB = w.deepcopy(objA);
+      objB.a.b.c = 2;
+      equal(objA.a.b.c, 1);
+      var objC = null;
+      w.deepcopy(objA, objC);
+      equal(typeof objC, 'object');
+      objA = new Date();
+      objB = w.deepcopy(objA);
+      strictEqual(objA, objB);
+    });
+
+    test('warmsea.extend()', function() {
+      equal(JSON.stringify(w.extend()), '{}');
+      equal(JSON.stringify(w.extend(1, 2)), '{}');
+      var objA, objB, objC;
+      objA = {
+        'a': {
+          'b': {
+            'c' : 1
+          }
+        }
+      };
+      objB = {
+        'a': {
+          'b1': {
+            'c1': 2,
+            'c2': 3
+          }
+        }
+      };
+      objC = {
+        'a': {
+          'b1': {
+            'c2': 3,
+            'c3': 4
+          }
+        }
+      };
+      w.extend(objA, objB, objC);
+      equal(JSON.stringify(objA), '{"a":{"b1":{"c2":3,"c3":4}}}');
+    });
+
     // jshint +W009
     // jshint +W010
     // jshint +W053

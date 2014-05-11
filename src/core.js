@@ -75,15 +75,7 @@ define([
    * @param {object} obj An Object.
    * @returns{Array} The keys of the object.
    */
-  w.keys = function(obj) {
-    var keys = [];
-    for (var k in obj) {
-      if (obj.hasOwnProperty(k)) {
-        keys.push(k);
-      }
-    }
-    return keys;
-  };
+  w.keys = _.keys;
 
   /**
    * Returns the values of an object.
@@ -100,36 +92,7 @@ define([
    * @param {object} obj An object.
    * @returns{Array} The values of the object.
    */
-  w.values = function(obj) {
-    var values = [];
-    for (var k in obj) {
-      if (obj.hasOwnProperty(k)) {
-        values.push(obj[k]);
-      }
-    }
-    return values;
-  };
-
-  /**
-   * Generate an array.
-   * This is the port of the Python range().
-   */
-  w.range = function(start, stop, step) {
-    if (arguments.length <= 1) {
-      stop = start || 0;
-      start = 0;
-    }
-    step = arguments[2] || 1;
-
-    var i = 0, len = Math.max(Math.ceil((stop - start) / step), 0);
-    var range = new Array(len);
-    while (i < len) {
-      range[i++] = start;
-      start += step;
-    }
-
-    return range;
-  };
+  w.values = _.values;
 
   /**
    * In-place stable sort.

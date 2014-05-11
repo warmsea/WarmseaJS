@@ -99,9 +99,7 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
-  w.isNumber = function(value) {
-    return typeof value === 'number';
-  };
+  w.isNumber = _.isNumber;
 
   /**
    * Test whether a value is an integer.
@@ -123,9 +121,7 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
-  w.isString = function(value) {
-    return typeof value === 'string';
-  };
+  w.isString = _.isString;
 
   /**
    * Test whether a value is an array.
@@ -133,9 +129,7 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is an array; <code>false</code>, otherwise.
    */
-  w.isArray = function(value) {
-    return value instanceof Array;
-  };
+  w.isArray = _.isArray;
 
   /**
    * Test whether a value is a function.
@@ -143,9 +137,7 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a function; <code>false</code>, otherwise.
    */
-  w.isFunction = function(value) {
-    return typeof value === 'function';
-  };
+  w.isFunction = _.isFunction;
 
   /**
    * Test whether a value is a plain object.
@@ -184,8 +176,74 @@ define([
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is an object; <code>false</code>, otherwise.
    */
-  w.isObject = function(value) {
-    return value !== null && typeof value === 'object';
+  w.isObject = _.isObject;
+
+  /**
+   * Deep copy a value (to target).
+   *
+   * @param {*} value
+   * @param {?*} target
+   * @return {*} the copied value.
+   */
+  w.deepcopy = function(value, target) {
+    if (w.isArray(value)) {
+      target = value.slice();
+    } else if (w.isPlainObject(value)) {
+      target = target || {};
+      for (var i in value) {
+        if (value.hasOwnProperty(i)) {
+          target[i] = w.deepcopy(value[i]);
+        }
+      }
+    } else {
+      target = value;
+    }
+    return target;
+  };
+
+  /**
+   * Merge the contents of two or more objects together into the first object.
+   *
+   * @param {?boolean} deep true for deep merge.
+   * @param {object} target the target object.
+   * @param {...object} source the source objects.
+   * @param {object} the extended target.
+   */
+  w.extend = function() {
+    var i, deep, target, source;
+    if (typeof arguments[0] === 'boolean') {
+      deep = arguments[0];
+      target = arguments[1] || {};
+      i = 2;
+    } else {
+      deep = false;
+      target = arguments[0] || {};
+      i = 1;
+    }
+
+    // If target is not an object, return {}.
+    if (!w.isObject(target)) {
+      return {};
+    }
+
+    for (; i < arguments.length; ++i) {
+      source = arguments[i];
+      // If source is not an object, ignore it.
+      if (!w.isObject(source)) {
+        continue;
+      }
+
+      for (var p in source) {
+        if (source.hasOwnProperty(p)) {
+          if (deep) {
+            target[p] = w.deepcopy(source[p]);
+          } else {
+            target[p] = source[p];
+          }
+        }
+      }
+    }
+    return target;
   };
 
   // $FOOTER$

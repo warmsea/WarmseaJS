@@ -11,7 +11,7 @@ module.exports = function(grunt) {'use strict';
     jsonlint: {
       pkg: {
         src: ['package.json']
-      },
+      }
     },
     jscs: {
       src: 'src/**/*.js',
@@ -27,13 +27,16 @@ module.exports = function(grunt) {'use strict';
           useStrict: true,
           name: 'warmsea',
           out: function(text) {
+            var underscore = grunt.file.read('lib/underscore.js').replace('$', '$$$$');
             text = text
             // $VERSION$, x.y.z
             .replace('$VERSION$', pkg.version)
             // $YEAR$, yyyy
             .replace('$YEAR$', today.getFullYear())
             // $DATE$, yyyy-mm-dd
-            .replace('$DATE$', today.toISOString().substring(0, 10));
+            .replace('$DATE$', today.toISOString().substring(0, 10))
+            // $UNDERSCORE$, the underscore.js source code
+            .replace('$UNDERSCORE$', underscore);
             // Write concatenated source to file
             grunt.file.write('dist/' + pkg.name + '.js', text);
           },
@@ -44,13 +47,13 @@ module.exports = function(grunt) {'use strict';
           },
           onBuildWrite: function(moduleName, path, contents) {
             var header = contents.indexOf('$HEADER$');
-            header = contents.indexOf('\n', header);
+            header = header >= 0 ? contents.indexOf('\n', header) : 0;
             var footer = contents.lastIndexOf('$FOOTER$');
-            footer = contents.lastIndexOf('\n', footer);
+            footer = footer >= 0 ? contents.lastIndexOf('\n', footer) : contents.length;
             contents = contents.substring(header, footer);
             contents = contents.replace(/^\n+/, '').replace(/\n+$/, '\n');
             return contents.trim() ? contents : '';
-          },
+          }
         }
       }
     },
@@ -74,12 +77,13 @@ module.exports = function(grunt) {'use strict';
         'trailing': true,
         // Globals
         'globals': {
+          '_': false,
           'module': false,
           'define': false,
           'require': false
         },
         // Ignores
-        'ignores': ['src/intro.js', 'src/outro.js'],
+        'ignores': ['src/intro.js', 'src/outro.js']
       },
       src: {
         files: {
@@ -117,7 +121,7 @@ module.exports = function(grunt) {'use strict';
     },
     uglify: {
       options: {
-        preserveComments: 'some',
+        preserveComments: 'some'
       },
       build: {
         src: 'dist/<%= pkg.name %>.js',
@@ -163,7 +167,6 @@ module.exports = function(grunt) {'use strict';
     'jshint:src',
     'jshint:test',
     'requirejs',
-    'jshint:compiled',
     'uglify',
     'qunit',
     'jsdoc',

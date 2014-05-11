@@ -1,5 +1,6 @@
 define([
   './core',
+  './arrays',
   './types',
   './strings',
   './math',
