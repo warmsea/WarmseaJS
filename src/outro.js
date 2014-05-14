@@ -1,11 +1,15 @@
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = w;
+  if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+      exports = module.exports = w;
+    } else {
+      exports.warmsea = w;
+    }
   } else if ( typeof define === 'function' && define.amd) {
     define(function() {
       return w;
     });
   } else {
-      global.warmsea = w;
+    global.warmsea = w;
   }
 
-})(this);
+})(this, typeof exports !== 'undefined' ? exports._ : _);

@@ -14,6 +14,6 @@ $UNDERSCORE$
 //// END OF THE underscore.js SOURCE CODE
 
 
-(function(global) {
+(function(global, _) {
   'use strict';
 
