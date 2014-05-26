@@ -1,11 +1,12 @@
 define([
   './core',
   './arrays',
-  './types',
-  './strings',
+  './collections',
+  './debug',
   './math',
   './random',
-  './collections'
+  './strings',
+  './types'
 ], function(w) {
   'use strict';
 // $HEADER$

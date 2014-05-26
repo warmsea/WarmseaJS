@@ -1,1 +1,1 @@
-var modules = ['core', 'arrays', 'types', 'strings', 'random', 'collections'];
+var modules = ['core', 'arrays', 'collections', 'debug', 'random', 'strings', 'types'];
