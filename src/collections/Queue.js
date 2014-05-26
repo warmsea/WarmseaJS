@@ -19,12 +19,21 @@ define([
       this.allowEmptyDequeue = true;
     };
 
-    Object.defineProperty(Queue.prototype, 'length', {
-      enumerable: true,
-      get: function() {
-        return this._queue.length - this._offset;
-      }
-    });
+    /**
+     * Number of elements in the Queue.
+     * @type {number}
+     */
+    try {
+      Object.defineProperty(Queue.prototype, 'length', {
+        enumerable: true,
+        get: function() {
+          return this._queue.length - this._offset;
+        }
+      });
+    } catch (e) {
+      // I'm not interested in fully supporting IE 8.
+      // But I don't want it dies in the first place.
+    }
 
     /**
      * Remove all objects from the Queue.
