@@ -94,6 +94,14 @@ define([
   };
 
   /**
+   * Test whether a value is NaN.
+   *
+   * @param {*} A value.
+   * @return {boolean} <code>true</code>, if <code>value</code> is NaN; <code>false</code>, otherwise.
+   */
+  w.isNaN = _.isNaN;
+
+  /**
    * Test whether a value is a number.
    *
    * @param {*} value A value.
