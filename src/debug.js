@@ -33,6 +33,41 @@ define([
     var modeMatchers = {};
 
     /**
+     * Themes for styled logging.
+     * @type {object}
+     */
+    var themes = {
+      'tomorrow': [
+        'color:#8e908c',  // The first style is for message.
+        'color:#f5871f',  // Others for debugger name and time.
+        'color:#8959a8',
+        'color:#4271ae',
+        'color:#718c00',
+        'color:#eab700',
+        'color:#c82829'
+      ]
+    };
+
+    /**
+     * Styles for styled logging.
+     * @type {Array}
+     */
+    var styles = themes.tomorrow;
+
+    /**
+     * Current color position.
+     * @type {number}
+     */
+    var pStyle = 0;
+
+    /**
+     * Detect Chrome browser.
+     * Enable color for Chrome browser.
+     * @type {boolean}
+     */
+    var isChrome = w.global.navigator && w.global.navigator.userAgent.toLowerCase().indexOf('chrome') !== -1;
+
+    /**
      * Create a debugger with the given `name`.
      *
      * @param {string} name the name.
@@ -56,14 +91,20 @@ define([
         var ms = curr - (this._timestamp || curr);
         this._timestamp = curr;
 
-        fmt = name + ' ' + fmt + ' +' + humanize(ms);
-
-        if (w.global.console && w.global.console.log) {
-          w.global.console.log(fmt);
+        if (isChrome) {
+          fmt = '%c' + name + '%c ' + fmt + ' %c+' + humanize(ms);
+          w.global.console.log(fmt, this._style, this._msgStyle, this._style);
+        } else {
+          fmt = name + ' ' + fmt + ' +' + humanize(ms);
+          if (w.global.console && w.global.console.log) {
+            w.global.console.log(fmt);
+          }
+          // Any one want to alert debug message? I think it's annoying.
         }
-        // Any one want to alert debug message? I think it's annoying.
       };
       dbg._name = name;
+      dbg._msgStyle = styles[0];
+      dbg._style = style();
       enableStatus[name] = debug.enabled(name);
       debuggers[name] = dbg.bind(dbg);
       return debuggers[name];
@@ -78,6 +119,13 @@ define([
       } else {
         return w.format.apply(this, arguments);
       }
+    };
+
+    /**
+     * Get a style for styled logging.
+     */
+    var style = function() {
+      return styles[pStyle++ % (styles.length - 1) + 1];
     };
 
     /**
