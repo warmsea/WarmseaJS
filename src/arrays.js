@@ -5,11 +5,6 @@ define([
 // $HEADER$
 
   /**
-   * The <code>arrays</code> namespace in <code>warmsea</code>.
-   */
-  w.arrays = {};
-
-  /**
    * Test if an item is in an array.
    *
    * @param {array} arr The array
@@ -49,20 +44,52 @@ define([
     return list;
   };
 
+  /**
+   * indexOf() from underscore.js.
+   * @method
+   */
   w.indexOf = _.indexOf;
 
+  /**
+   * range() from underscore.js.
+   * @method
+   */
   w.range = _.range;
 
+  /**
+   * all() from underscore.js.
+   * @method
+   */
   w.all = _.all;
 
+  /**
+   * any() from underscore.js.
+   * @method
+   */
   w.any = _.any;
 
+  /**
+   * each() from underscore.js.
+   * @method
+   */
   w.each = _.each;
 
+  /**
+   * map() from underscore.js.
+   * @method
+   */
   w.map = _.map;
 
+  /**
+   * reduce() from underscore.js.
+   * @method
+   */
   w.reduce = _.reduce;
 
+  /**
+   * filter() from underscore.js.
+   * @method
+   */
   w.filter = _.filter;
 
 // $FOOTER$

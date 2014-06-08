@@ -8,9 +8,11 @@ Features
 **WarmseaJS** has the following features:
 
 1. Type casting and testing
-2. String formatting
-3. Collections
-3. And some other features
+1. String formatting
+1. Debugger
+1. Collections
+1. Array functions
+1. And some other features
 
 There is a brief introduction below.
 
@@ -21,9 +23,10 @@ Get Started
 -----------
 
 Download **WarmseaJS**:
-* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.4.0.min.js)
-* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.4.0.js)
-* [The full source code package, as a ZIP file](https://github.com/warmsea/WarmseaJS/releases/download/v0.4.0/warmseajs-v0.4.0.zip)
+
+* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.5.0.min.js)
+* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.5.0.js)
+* [The full source code package, as a ZIP file](https://github.com/warmsea/WarmseaJS/releases/download/v0.5.0/warmseajs-v0.5.0.zip)
 
 Include the JS file with `<script>` tag or [**RequireJS**](http://requirejs.org/).
 When included with `<script>` tag, a global namespace `warmsea` will be
@@ -236,3 +239,62 @@ w.min(func, 2, 3, 5, 8, 13);    // 13
 
 w.randomString(4, 'abcd');      // something like 'ccad'
 ```
+
+A full list of APIs
+===================
+
+* Core
+  * w.global
+  * w.noop()
+  * w.identity()
+  * w.unimplemented()
+  * w.error()
+  * w.cmp()
+  * w.keys() _(from underscore.js)_
+  * w.values() _(from underscore.js)_
+* Arrays
+  * w.indexOf() _(from underscore.js)_
+  * w.inArray()
+  * w.range() _(from underscore.js)_
+  * w.all() _(from underscore.js)_
+  * w.any() _(from underscore.js)_
+  * w.each() _(from underscore.js)_
+  * w.map() _(from underscore.js)_
+  * w.reduce() _(from underscore.js)_
+  * w.filter() _(from underscore.js)_
+  * w.sort()
+* Collections
+  * Queue class
+  * Stack class
+* Debug _(inspired by [debug](https://github.com/visionmedia/debug))_
+  * w.debug()
+  * w.debug.disable()
+  * w.debug.enable()
+  * w.debug.enabled()
+* Math
+  * w.min() _(from underscore.js)_
+  * w.max() _(from underscore.js)_
+* Random
+  * w.random()
+  * w.randomInt()
+  * w.randomFloat()
+  * w.randomString()
+* Strings
+  * w.pad()
+  * w.format()
+* Types
+  * w.bool()
+  * w.i()
+  * w.f()
+  * w.str()
+  * w.array()
+  * w.isNaN() _(from underscore.js)_
+  * w.isNumber() _(from underscore.js)_
+  * w.isInt()
+  * w.isString() _(from underscore.js)_
+  * w.isArray() _(from underscore.js)_
+  * w.isFunction() _(from underscore.js)_
+  * w.isObject() _(from underscore.js)_
+  * w.isPlainObject()
+  * w.deepcopy()
+  * w.extend()

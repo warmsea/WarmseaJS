@@ -1,3 +1,40 @@
+Version 0.5.0 (2014-06-08)
+==========================
+
+[Underscore.js](http://underscorejs.org/) includes a lot of functions I want
+in my **WarmseaJS**, so why bother writing my own. So some functions are
+replaced with equivalents in `underscore.js`.
+
+New Features
+------------
+
+* Arrays
+  * w.inArray()
+  * w.indexOf()
+  * w.all()
+  * w.any()
+  * w.each()
+  * w.map()
+  * w.reduce()
+  * w.filter()
+* Debug
+  * w.debug()
+  * w.debug.disable()
+  * w.debug.enable()
+  * w.debug.enabled()
+* Types
+  * w.deepcopy()
+  * w.extend()
+
+Changes
+-------
+
+* Core
+  * w.range() and w.sort() are moved from Core to Arrays
+* Math
+  * w.min() and w.max() are changed to underscore.js style
+
+
 Version 0.4.0 (2014-05-03)
 ==========================
 

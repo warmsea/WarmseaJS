@@ -96,6 +96,7 @@ define([
   /**
    * Test whether a value is NaN.
    *
+   * @method
    * @param {*} A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is NaN; <code>false</code>, otherwise.
    */
@@ -104,6 +105,7 @@ define([
   /**
    * Test whether a value is a number.
    *
+   * @method
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
@@ -126,6 +128,7 @@ define([
   /**
    * Test whether a value is a string.
    *
+   * @method
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
@@ -134,6 +137,7 @@ define([
   /**
    * Test whether a value is an array.
    *
+   * @method
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is an array; <code>false</code>, otherwise.
    */
@@ -142,6 +146,7 @@ define([
   /**
    * Test whether a value is a function.
    *
+   * @method
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is a function; <code>false</code>, otherwise.
    */
@@ -181,6 +186,7 @@ define([
    * <p>
    * Arrays pass both <code>warmsea.isArray()</code> and <code>warmsea.isObject()</code>.
    *
+   * @method
    * @param {*} value A value.
    * @return {boolean} <code>true</code>, if <code>value</code> is an object; <code>false</code>, otherwise.
    */

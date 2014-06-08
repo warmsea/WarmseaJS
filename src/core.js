@@ -14,6 +14,7 @@
 
     /**
      * The global object.
+     * @type {Object}
      */
     w.global = global;
 
@@ -73,6 +74,7 @@
      * Code: w.keys({a:1, b:2, c:3});
      * Result: ["a", "b", "c"]
      *
+     * @method
      * @param {object} obj An Object.
      * @returns{Array} The keys of the object.
      */
@@ -90,6 +92,7 @@
      * Code: w.values({a:1, b:'hello', c:[1,2,3]});
      * Result: [1, "hello", [1, 2, 3]]
      *
+     * @method
      * @param {object} obj An object.
      * @returns{Array} The values of the object.
      */
