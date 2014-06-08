@@ -20,6 +20,15 @@ define([
     };
 
     /**
+     * Returns number of elements in the Stack.
+     *
+     * @return {number}
+     */
+    Stack.prototype.count = function() {
+      return this._top + 1;
+    };
+
+    /**
      * Number of elements in the Queue.
      * @type {number}
      */
@@ -27,7 +36,7 @@ define([
       Object.defineProperty(Stack.prototype, 'length', {
         enumerable: true,
         get: function() {
-          return this._top + 1;
+          return this.count();
         }
       });
     } catch (e) {

@@ -20,6 +20,15 @@ define([
     };
 
     /**
+     * Returns number of elements in the Queue.
+     *
+     * @return {number}
+     */
+    Queue.prototype.count = function() {
+      return this._queue.length - this._offset;
+    };
+
+    /**
      * Number of elements in the Queue.
      * @type {number}
      */
@@ -27,7 +36,7 @@ define([
       Object.defineProperty(Queue.prototype, 'length', {
         enumerable: true,
         get: function() {
-          return this._queue.length - this._offset;
+          return this.count();
         }
       });
     } catch (e) {
