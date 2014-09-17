@@ -8,8 +8,8 @@ define([
    * Test if an item is in an array.
    *
    * @param {array} arr The array
-   * @param {*} item The item
-   * @returns {boolean} true, if the item is in the array; false, if not.
+   * @param {any} item The item
+   * @return {boolean} true, if the item is in the array; false, if not.
    */
   w.inArray = function(arr, item) {
     if (!w.isArray(arr)) {
@@ -91,6 +91,12 @@ define([
    * @method
    */
   w.filter = _.filter;
+
+  /**
+   * sortBy() from underscore.js.
+   * @method
+   */
+  w.sortBy = _.sortBy;
 
 // $FOOTER$
   return w;

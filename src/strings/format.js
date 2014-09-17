@@ -7,10 +7,10 @@ define([
 
   /**
    * Pad a string to a given length by adding leading characters.
-   *
-   * @param {number|string} value The value; usually a number.
-   * @param {int} length The wanted length. If not given, it's 2.
-   * @param {string} leading The leading character. If not given, it's '0'.
+   * @method
+   * @param {number|string} value The value; it can be a number.
+   * @param {int} length The wanted length. Defaults to 2.
+   * @param {string} leading The leading character. Defaults to '0'.
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
@@ -21,100 +21,10 @@ define([
   };
 
   /**
-   * Format a string.
-   * <p>
-   * It is similar to the <code>sprintf()</code> in the C language.
-   * <p>
-   * A conversion specifiers is of the following format: <br>
-   * %[mapping_key][flags][width][.precision][length]conversion_type
-   * <p>
-   * A mapping key is a parenthesized string (for example, <code>(year)</code>,
-   * parenthesis is not allowed inside it).
-   * <p>
-   * Available flags are listed below:<br>
-   * <table><thead>
-   * <tr>
-   * <th>Flag
-   * <th>Meaning</th>
-   * <tbody>
-   * <tr>
-   * <td><code>#</code>
-   * <td>Use the "alternate form".
-   * <tr>
-   * <td><code>0</code>
-   * <td>zero padding before a number.
-   * <tr>
-   * <td><code>-</code>
-   * <td>(Overrides "0" flag.) The converted value is left adjusted.
-   * <tr>
-   * <td><code>(a space)</code>
-   * <td>A space will precede a positive number or an empty string produced by
-   * a signed conversion.
-   * <tr>
-   * <td><code>+</code>
-   * <td>(Overrides "space" flag.) A sign character ("+" or "-") will precede a
-   * number.</td>
-   * </table>
-   * <p>
-   * "width" is an integer indicates the minimum field width, or an "*". If it
-   * is an "*", the width is the next <code>arg</code>, and the value to
-   * convert comes after the width and the optional precision.
-   * <p>
-   * "precision" is a dot (".") followed by an integer indicates the precision,
-   * or an "*". If it is an "*", the precision is the next <code>arg</code>,
-   * and the value to convert comes after the precision. The precision
-   * determines the number of digits after the decimal point and defaults to 6.
-   * <p>
-   * "length" is one of "h", "l" or "L". But it is ignored as it is not
-   * necessary for JavaScript.
-   * <p>
-   * Available conversion types are listed below:<br>
-   * <table><thead>
-   * <tr>
-   * <th>Conversion
-   * <th>Meaning
-   * <th>Note</th>
-   * <tbody>
-   * <tr>
-   * <td><code>d</code>
-   * <td>Decimal.
-   * <td>
-   * <tr>
-   * <td><code>o</code>
-   * <td>Octal.
-   * <td>"Alternate form" adds leading zero ("0").
-   * <tr>
-   * <td><code>x</code>
-   * <td>Lowercase hexadecimal.
-   * <td>"Alternate form" adds leading "0x".
-   * <tr>
-   * <td><code>X</code>
-   * <td>Uppercase hexadecimal.
-   * <td>"Alternate form" adds leading "0X".
-   * <tr>
-   * <td><code>f</code>
-   * <td>Floating point decimal format.
-   * <td>"Alternate form" ensures a decimal point, even if no digits follow it.
-   * <tr>
-   * <td><code>s</code>
-   * <td>String
-   * <td>
-   * <tr>
-   * <td><code>%</code>
-   * <td>A "%" character.
-   * <td>
-   * <tr>
-   * <td><code>/</code>
-   * <td>A "/" character.</td>
-   * </table>
-   * <p>
-   * All integer values are converted with <code>warmsea.int()</code>. And
-   * <code>warmsea.float()</code> for floats, <code>warmsea.string()</code>
-   * for strings.
-   *
-   * @function
+   * Replace each conversion specifier of a format string with the string representation of a specified object.
+   * @method
    * @param {string|function} format the format string.
-   * @param {...*} args Arguments one by one, or a list.
+   * @param {...any|any[]|PlainObject} args Arguments one by one, or a list, or a map.
    * @return {string} The formatted string.
    */
   w.format = (function(w) {
@@ -147,8 +57,9 @@ define([
 
     /**
      * Convert a function into a (multi-line) string.
-     *
-     * @see warmsea#format
+     * @method
+     * @param {function} func
+     * @return {string}
      */
     var func2str = function(func) {
       if (w.isString(func)) {
@@ -246,9 +157,9 @@ define([
     };
 
     /**
-     * Convertor for <code>format()</code> function.
-     *
-     * @see warmsea#format
+     * Converter for <code>warmsea.format()</code> function.
+     * @class
+     * @param {string[]} params
      */
     var FormatConverter = function(params) {
       this.params = params || [];
@@ -256,9 +167,15 @@ define([
     };
 
     /**
-     * Convert a specifier into wanted string.
-     *
-     * @see warmsea#format
+     * Convert a specifier to wanted string.
+     * @method
+     * @param {string} specifier
+     * @param {string} key
+     * @param {string} flags
+     * @param {string} width
+     * @param {string} precision
+     * @param {string} type
+     * @param {string} position
      */
     FormatConverter.prototype.convert = function(specifier, key, flags, width, precision, type, position) {
       if (type === undefined) {
@@ -313,7 +230,7 @@ define([
     };
 
     /**
-     * The convertors of each type.
+     * The converters of each type.
      */
     FormatConverter.prototype.convertors = {
       'd': function(value, flags, width /*, precision */) {

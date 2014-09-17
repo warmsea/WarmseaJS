@@ -7,10 +7,9 @@ define([
 // @formatter:on $HEADER$
 
   /**
-   * Cast a value to a Boolean.
-   *
-   * @param {*} value A value.
-   * @return {boolean} The boolean value.
+   * Convert an arbitrary value to a boolean value.
+   * @param {any} value
+   * @return {boolean}
    */
   w.bool = function(value) {
     var v = value;
@@ -22,15 +21,16 @@ define([
   };
 
   /**
-   * Cast a value to an Integer.
-   *
-   * @param {*} value A value.
+   * Convert a value to an Integer.
+   * @param {any} value
    * @param {number} radix An integer between 2 and 32.
-   * @return {number} The integer value.
+   * @return {number}
    */
   w.i = function(value, radix) {
     var v = value;
-    if (v === true) {
+    if (v === false) {
+      return 0;
+    } else if (v === true) {
       return 1;
     } else if (w.isObject(v) && '__int__' in v) {
       return w.i(w.isFunction(v.__int__) ? v.__int__() : v.__int__, radix);
@@ -44,14 +44,15 @@ define([
   };
 
   /**
-   * Cast a value to a Float.
-   *
-   * @param {*} value A value.
-   * @return {number} The float value.
+   * Convert a value to a number.
+   * @param {any} value
+   * @return {number}
    */
   w.f = function(value) {
     var v = value;
-    if (v === true) {
+    if (v === false) {
+      return 0.0;
+    } else if (v === true) {
       return 1.0;
     } else if (w.isObject(v) && '__float__' in v) {
       return w.f(w.isFunction(v.__float__) ? v.__float__() : v.__float__);
@@ -61,10 +62,9 @@ define([
   };
 
   /**
-   * Cast a value to a String.
-   *
-   * @param {*} value A value.
-   * @return {string} The string value.
+   * Convert a value to a String.
+   * @param {any} value
+   * @return {string}
    */
   w.str = function(value) {
     var v = value;
@@ -76,12 +76,9 @@ define([
   };
 
   /**
-   * Cast a value to an Array.
-   * <p>
-   * If <code>value</code> is <code>undefined</code> or <code>null</code>, an empty array will be returned.
-   *
-   * @param {*} value A value.
-   * @return {Array} The array value.
+   * Convert a value to an array.
+   * @param {any} value
+   * @return {Array}
    */
   w.array = function(value) {
     if (w.isArray(value)) {
@@ -94,63 +91,71 @@ define([
   };
 
   /**
-   * Test whether a value is NaN.
-   *
+   * isNaN() from underscore.js.
+   * Determine whether a value is NaN.
    * @method
-   * @param {*} A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is NaN; <code>false</code>, otherwise.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isNaN = _.isNaN;
 
   /**
-   * Test whether a value is a number.
-   *
+   * isNumber() from underscore.js.
+   * Determine whether a value is a number.
    * @method
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
    */
   w.isNumber = _.isNumber;
 
   /**
-   * Test whether a value is an integer.
+   * Test whether a value is an safe integer.
    * <p>
    * JavaScript has only one number type, that is 64-bit floating-point number. So we test whether the value is an
    * integer in that system. Which means 1.0 and 1 are both integers, but 9007199254740994 is not an integer because it
-   * exceeds the max integer value a 64-bit floating-point number can present (±2^53).
-   *
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
+   * exceeds the max/min safe integer value a 64-bit floating-point number can present.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isInt = function(value) {
-    return typeof value === 'number' && value % 1 === 0 && value >= -9007199254740992 && value <= 9007199254740992;
+    // return w.isNumber(value) && value % 1 === 0 &&
+    // value >= Number.MIN_SAFE_INTEGER && value <= Number.MAX_SAFE_INTEGER;
+    return w.isNumber(value) && value % 1 === 0 && value >= -9007199254740991 && value <= 9007199254740991;
   };
 
   /**
+   * isString() form underscore.js.
    * Test whether a value is a string.
-   *
    * @method
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is a string; <code>false</code>, otherwise.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isString = _.isString;
 
   /**
+   * isArray() form underscore.js.
    * Test whether a value is an array.
-   *
    * @method
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is an array; <code>false</code>, otherwise.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isArray = _.isArray;
 
   /**
+   * isFunction() from underscore.js.
    * Test whether a value is a function.
-   *
    * @method
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is a function; <code>false</code>, otherwise.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isFunction = _.isFunction;
+
+  /**
+   * isObject() from underscore.js.
+   * Test whether a value is a object.
+   * @method
+   * @param {any} value
+   * @return {boolean}
+   */
+  w.isObject = _.isObject;
 
   /**
    * Test whether a value is a plain object.
@@ -159,11 +164,11 @@ define([
    * <p>
    * A plain object is typically an object defined with <code>{}</code> or <code>new Object</code>.
    *
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is a plain object; <code>false</code>, otherwise.
+   * @param {any} value
+   * @return {boolean}
    */
   w.isPlainObject = function(value) {
-    if (String(value) !== '[object Object]') {
+    if (!w.isObject(value)) {
       return false;
     }
     try {
@@ -177,27 +182,10 @@ define([
   };
 
   /**
-   * Test whether a value is an object.
-   * <p>
-   * <code>undefined</code>, <code>null</code>, numbers, strings won't pass this test, everything else will.
-   * <p>
-   * ATTENSION: <code>typeof null</code> is <code>"object"</code>, but <code>warmsea.isObject(null)</code> returns
-   * <code>false</code>. Because using a <code>null</code> object is always error-prone.
-   * <p>
-   * Arrays pass both <code>warmsea.isArray()</code> and <code>warmsea.isObject()</code>.
-   *
-   * @method
-   * @param {*} value A value.
-   * @return {boolean} <code>true</code>, if <code>value</code> is an object; <code>false</code>, otherwise.
-   */
-  w.isObject = _.isObject;
-
-  /**
-   * Deep copy a value (to target).
-   *
-   * @param {*} value
-   * @param {?*} target
-   * @return {*} the copied value.
+   * Deep copy a value (to a target).
+   * @param {any} value
+   * @param {?any} target
+   * @return {any} the copied value.
    */
   w.deepcopy = function(value, target) {
     if (w.isArray(value)) {
@@ -206,7 +194,7 @@ define([
       target = target || {};
       for (var i in value) {
         if (value.hasOwnProperty(i)) {
-          target[i] = w.deepcopy(value[i]);
+          target[i] = w.deepcopy(value[i], target[i]);
         }
       }
     } else {
@@ -221,7 +209,7 @@ define([
    * @param {?boolean} deep true for deep merge.
    * @param {object} target the target object.
    * @param {...object} source the source objects.
-   * @param {object} the extended target.
+   * @return {object} the extended target.
    */
   w.extend = function() {
     var i, deep, target, source;

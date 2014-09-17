@@ -80,7 +80,7 @@ define([
      *
      * @method
      * @name warmsea.Stack.prototype.pop
-     * @return {*} The object at the top of the Stack.
+     * @return {any} The object at the top of the Stack.
      */
     Stack.prototype.pop = function() {
       if (this.length === 0) {
@@ -102,7 +102,7 @@ define([
      *
      * @method
      * @name warmsea.Stack.prototype.peek
-     * @return {*} The object at the top of the Stack.
+     * @return {any} The object at the top of the Stack.
      */
     Stack.prototype.peek = function() {
       if (this.length === 0) {

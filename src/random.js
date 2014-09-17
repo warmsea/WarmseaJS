@@ -7,38 +7,35 @@ define([
 // $HEADER$
 
   /**
-   * Choose a random floating-point number in the range of [0.0, 1.0).
-   *
-   * @return {number} A floating-point number in the range of [0.0, 1.0).
+   * Return a random number in the range of [0.0, 1.0).
+   * Identical to Math.random().
+   * @method
+   * @return {number}
    */
-  w.random = function() {
-    return Math.random();
-  };
+  w.random = Math.random;
 
   /**
-   * Choose a random integer in the range of [start, end).
-   * <p>
+   * Return a random integer in the range of [start, end).
    * If end is not passed, the range will be [0, start).
-   *
-   * @param {number} start start of the range.
-   * @param {number} stop end of the range.
-   * @return {number} A random integer in the range.
+   * @param {number} start
+   * @param {number} end
+   * @return {number}
    */
-  w.randomInt = function(start, stop) {
-    if (start === undefined && stop === undefined) {
+  w.randomInt = function(start, end) {
+    if (start === undefined && end === undefined) {
       return 0;
-    } else if (stop === undefined) {
-      stop = start;
+    } else if (end === undefined) {
+      end = start;
       start = 0;
     }
     start = Math.ceil(start);
-    stop = Math.ceil(stop);
-    if (start < stop) {
-      return start + Math.floor((stop - start) * Math.random());
-    } else if (start > stop) {
-      return start - Math.floor((start - stop) * Math.random());
+    end = Math.ceil(end);
+    if (start < end) {
+      return start + Math.floor((end - start) * Math.random());
+    } else if (start > end) {
+      return start - Math.floor((start - end) * Math.random());
     } else {
-      w.error('No integer in the range of [' + start + ', ' + stop + ')');
+      return NaN;
     }
   };
 
@@ -51,29 +48,24 @@ define([
    * @param {number} end end of the range.
    * @return {number} A random number in the range.
    */
-  w.randomFloat = function(start, stop) {
-    if (start === undefined && stop === undefined) {
+  w.randomFloat = function(start, end) {
+    if (start === undefined && end === undefined) {
       return Math.random();
-    } else if (stop === undefined) {
+    } else if (end === undefined) {
       return Math.random() * start;
-    } else if (start < stop) {
-      return start + Math.random() * (stop - start);
-    } else if (start > stop) {
-      return start - Math.random() * (start - stop);
+    } else if (start < end) {
+      return start + Math.random() * (end - start);
+    } else if (start > end) {
+      return start - Math.random() * (start - end);
     } else {
-      w.error('No number in the range of [' + start + ', ' + stop + ')');
+      return NaN;
     }
   };
 
   /**
-   * Generate a random string.
-   * <p>
-   * By default, the string may contain some of the these characters:
-   * <code>abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789</code>.
-   * And by default, the string has 8 characters.
-   *
-   * @param {number} length The length of the string. Default to 8.
-   * @param {string} allowedChars The allowed characters in the string.
+   * Return a random string.
+   * @param {number} length Default to 8.
+   * @param {string} allowedChars Default to "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"
    */
   w.randomString = function(length, allowedChars) {
     if (length === undefined) {
@@ -89,6 +81,11 @@ define([
     }
     var res = '';
     var len = allowedChars.length;
+
+    if (!len) {
+      return '';
+    }
+
     for (var i = 0; i < length; i++) {
       res += allowedChars[Math.floor(Math.random() * len)];
     }

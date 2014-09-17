@@ -75,7 +75,7 @@ define([
      *
      * @method
      * @name warmsea.Queue.prototype.dequeue
-     * @return {*} The object at the beginning of the Queue.
+     * @return {any} The object at the beginning of the Queue.
      */
     Queue.prototype.dequeue = function() {
       if (this.length === 0) {
@@ -98,7 +98,7 @@ define([
      *
      * @method
      * @name warmsea.Queue.prototype.peek
-     * @return {*} The object at the beginning of the Queue.
+     * @return {any} The object at the beginning of the Queue.
      */
     Queue.prototype.peek = function() {
       if (this.length === 0) {

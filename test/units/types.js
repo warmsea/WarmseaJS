@@ -62,10 +62,10 @@ define(function() {
       ok(isNaN(w.i('-')));
       ok(isNaN(w.i(undefined)));
       ok(isNaN(w.i(null)));
-      ok(isNaN(w.i(false)));
       ok(isNaN(w.i({})));
       equal(w.i(11), 11);
       equal(w.i(true), 1);
+      equal(w.i(false), 0);
       equal(w.i('011'), 11);
       equal(w.i('0xAB'), 171);
       equal(w.i('AB', 16), 171);
@@ -80,9 +80,9 @@ define(function() {
       ok(isNaN(w.f(null)));
       ok(isNaN(w.f('a')));
       ok(isNaN(w.f('-')));
-      ok(isNaN(w.f(false)));
       ok(isNaN(w.f({})));
       equal(w.f(true), 1.0);
+      equal(w.f(false), 0.0);
       equal(w.f(1.7), 1.7);
       equal(w.f('-1.7'), -1.7);
       equal(w.f('-1.7e4'), -1.7e4);

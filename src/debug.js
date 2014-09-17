@@ -6,6 +6,12 @@ define([
   'use strict';
 // $HEADER$
 
+  /**
+   * Create a debugger function with a name.
+   * @method
+   * @param {string} name
+   * @return {function}
+   */
   w.debug = (function() {
 
     /**
@@ -68,10 +74,9 @@ define([
     var isChrome = w.global.navigator && w.global.navigator.userAgent.toLowerCase().indexOf('chrome') !== -1;
 
     /**
-     * Create a debugger with the given `name`.
-     *
-     * @param {string} name the name.
-     * @return {function} the debugger.
+     * Create a debugger function with a name.
+     * @param {string} name
+     * @return {function}
      */
     var debug = function(name) {
       if (debuggers[name]) {
@@ -129,8 +134,7 @@ define([
     };
 
     /**
-     * Humanize the given `ms`.
-     *
+     * Humanize the given milliseconds.
      * @param {number} ms number of milliseconds.
      * @return {string} A human readable representation.
      */
@@ -152,9 +156,8 @@ define([
     };
 
     /**
-     * Enable debug modes.
-     *
-     * @param {string} name debug mode name
+     * Enable debugger(s) with the specified name.
+     * @param {string} name
      */
     debug.enable = function(name) {
       w.each((name || '').split(/[\s,]+/), function(mode) {
@@ -179,10 +182,9 @@ define([
     };
 
     /**
-     * Disable debug modes.
+     * Enable debugger(s) with the specified name.
      * Call this function without an argument to disable all debug modes.
-     *
-     * @param {?string} name debug mode name
+     * @param {?string} name
      */
     debug.disable = function(name) {
       if (name === undefined) {
@@ -204,7 +206,6 @@ define([
 
     /**
      * Return true if the given mode name is enabled, false otherwise.
-     *
      * @param {string} name
      * @return {boolean}
      */
@@ -232,4 +233,4 @@ define([
 
 // $FOOTER$
   return w;
-})();
+});

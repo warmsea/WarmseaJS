@@ -8,8 +8,8 @@ define([
    * Return the smallest value.
    *
    * @param {function} cmp A optional compare function.
-   * @param {*} values Values as an array or a list of arguments.
-   * @return {*} The smallest value.
+   * @param {any} values Values as an array or a list of arguments.
+   * @return {any} The smallest value.
    */
   w.min = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
@@ -41,8 +41,8 @@ define([
    * Return the largest value.
    *
    * @param {function} cmp A optional compare function.
-   * @param {*} values Values as an array or a list of arguments.
-   * @return {*} The largest value.
+   * @param {any} values Values as an array or a list of arguments.
+   * @return {any} The largest value.
    */
   w.max = function(/* [cmp,] (values_array | value1,value2,value3,...) */) {
     if (!arguments.length) {
