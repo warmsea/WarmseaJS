@@ -1,41 +1,49 @@
 {
   "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
-  "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+  "requireSpaceAfterKeywords": ["do", "for", "if", "else", "switch", "case", "try",
+                                "catch", "while", "with", "return", "typeof"],
+  "requireSpaceBeforeBlockStatements": true,
   "requireParenthesesAroundIIFE": true,
-  "requireSpacesInFunctionExpression": {
+  "requireSpacesInConditionalExpression": true,
+  "requireSpacesInFunction": {
     "beforeOpeningCurlyBrace": true
   },
-  "disallowSpacesInFunctionExpression": {
+  "disallowSpacesInFunction": {
     "beforeOpeningRoundBrace": true
   },
   "requireBlocksOnNewline": true,
+  "disallowSpacesInsideParentheses": true,
   "requireSpacesInsideObjectBrackets": "all",
   "disallowSpaceAfterObjectKeys": true,
   "requireCommaBeforeLineBreak": true,
-  "disallowLeftStickedOperators": ["?", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
-  "disallowRightStickedOperators": ["?", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
   "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
   "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
-  "requireRightStickedOperators": ["!"],
-  "requireLeftStickedOperators": [","],
+  "disallowSpaceBeforeBinaryOperators": [","],
+  "requireSpaceBeforeBinaryOperators": true,
+  "requireSpaceAfterBinaryOperators": true,
   "requireCamelCaseOrUpperCaseIdentifiers": true,
-  "disallowKeywords": ["with"],
   "disallowMultipleLineBreaks": true,
+  "disallowMixedSpacesAndTabs": true,
+  "disallowTrailingWhitespace": true,
+  "disallowTrailingComma": true,
+  "disallowKeywordsOnNewLine": ["else"],
+  "requireLineFeedAtFileEnd": true,
+  "maximumLineLength": 120,
+  "requireCapitalizedConstructors": true,
+  "requireSpaceAfterLineComment": true,
+  "requireAnonymousFunctions": true,
+  "disallowNewlineBeforeBlockStatements": true,
   "validateLineBreaks": "LF",
   "validateQuoteMarks": {
     "mark": "'",
     "escape": true
   },
   "validateIndentation": 2,
-  "disallowTrailingWhitespace": true,
-  "disallowKeywordsOnNewLine": ["else"],
-  "requireLineFeedAtFileEnd": true,
-  "maximumLineLength": 120,
-  "requireCapitalizedConstructors": true,
-  "safeContextKeyword": ["that"],
+  "validateParameterSeparator": ", ",
   "validateJSDoc": {
     "requireParamTypes": true
   },
+  "safeContextKeyword": ["that"],
 
   "excludeFiles": ["src/intro.js", "src/outro.js"]
 }
