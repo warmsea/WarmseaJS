@@ -7,14 +7,6 @@ define([
 // $HEADER$
 
   /**
-   * Return a random number in the range of [0.0, 1.0).
-   * Identical to Math.random().
-   * @method
-   * @return {number}
-   */
-  w.random = Math.random;
-
-  /**
    * Return a random integer in the range of [start, end).
    * If end is not passed, the range will be [0, start).
    * @param {number} start

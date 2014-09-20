@@ -45,7 +45,7 @@ define([
 
   /**
    * Convert a value to a number.
-   * @param {any} value
+   * @param {any} valueq
    * @return {number}
    */
   w.f = function(value) {
@@ -91,22 +91,6 @@ define([
   };
 
   /**
-   * isNaN() from underscore.js.
-   * Determine whether a value is NaN.
-   * @method
-   * @param {any} value
-   * @return {boolean}
-   */
-  w.isNaN = _.isNaN;
-
-  /**
-   * isNumber() from underscore.js.
-   * Determine whether a value is a number.
-   * @method
-   */
-  w.isNumber = _.isNumber;
-
-  /**
    * Test whether a value is an safe integer.
    * <p>
    * JavaScript has only one number type, that is 64-bit floating-point number. So we test whether the value is an
@@ -120,42 +104,6 @@ define([
     // value >= Number.MIN_SAFE_INTEGER && value <= Number.MAX_SAFE_INTEGER;
     return w.isNumber(value) && value % 1 === 0 && value >= -9007199254740991 && value <= 9007199254740991;
   };
-
-  /**
-   * isString() form underscore.js.
-   * Test whether a value is a string.
-   * @method
-   * @param {any} value
-   * @return {boolean}
-   */
-  w.isString = _.isString;
-
-  /**
-   * isArray() form underscore.js.
-   * Test whether a value is an array.
-   * @method
-   * @param {any} value
-   * @return {boolean}
-   */
-  w.isArray = _.isArray;
-
-  /**
-   * isFunction() from underscore.js.
-   * Test whether a value is a function.
-   * @method
-   * @param {any} value
-   * @return {boolean}
-   */
-  w.isFunction = _.isFunction;
-
-  /**
-   * isObject() from underscore.js.
-   * Test whether a value is a object.
-   * @method
-   * @param {any} value
-   * @return {boolean}
-   */
-  w.isObject = _.isObject;
 
   /**
    * Test whether a value is a plain object.

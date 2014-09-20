@@ -16,4 +16,7 @@ $UNDERSCORE$
 
 (function(global, _) {
   'use strict';
+  _ = _.noConflict();
+
+  var underscoreKeys = _.keys(_);
 

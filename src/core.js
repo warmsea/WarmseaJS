@@ -9,28 +9,13 @@
      * @namespace
      * @alias warmsea
      */
-    var w = {};
+    var w = _.extend({}, _);
 
     /**
      * The global object of the executing environment.
      * @type {object}
      */
     w.global = global;
-
-    /**
-     * A function with no operation (thus an empty function).
-     */
-    w.noop = function() {
-    };
-
-    /**
-     * An identity function that returns the first argument as it is.
-     * @param {any} value
-     * @return {any}
-     */
-    w.identity = function(value) {
-      return value;
-    };
 
     /**
      * A function that throws an error with the message "Unimplemented".
@@ -58,24 +43,6 @@
     w.cmp = function(a, b) {
       return a > b ? 1 : a < b ? -1 : 0;
     };
-
-    /**
-     * keys() from underscore.js.
-     * Return the property names of an object.
-     * @method
-     * @param {any} object
-     * @return {string[]}
-     */
-    w.keys = _.keys;
-
-    /**
-     * values() from underscore.js.
-     * Return the property values of an object.
-     * @method
-     * @param {any} object
-     * @return {any[]}
-     */
-    w.values = _.values;
 
 // $FOOTER$
     return w;
