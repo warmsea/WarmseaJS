@@ -27,7 +27,7 @@ module.exports = function(grunt) {'use strict';
           useStrict: true,
           name: 'warmsea',
           out: function(text) {
-            var underscore = grunt.file.read('lib/underscore.js').replace(/\$/g, '$$$$');
+            var underscore = grunt.file.read('lib/underscore/underscore.js').replace(/\$/g, '$$$$');
             text = text
             // $VERSION$, x.y.z
             .replace('$VERSION$', pkg.version)
