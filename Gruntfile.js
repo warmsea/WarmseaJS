@@ -1,4 +1,5 @@
-module.exports = function(grunt) {'use strict';
+module.exports = function(grunt) {
+  'use strict';
 
   var pkg = grunt.file.readJSON('package.json');
   var gzip = require('gzip-js');
@@ -29,14 +30,14 @@ module.exports = function(grunt) {'use strict';
           out: function(text) {
             var underscore = grunt.file.read('lib/underscore/underscore.js').replace(/\$/g, '$$$$');
             text = text
-            // $VERSION$, x.y.z
-            .replace('$VERSION$', pkg.version)
-            // $YEAR$, yyyy
-            .replace('$YEAR$', today.getFullYear())
-            // $DATE$, yyyy-mm-dd
-            .replace('$DATE$', today.toISOString().substring(0, 10))
-            // $UNDERSCORE$, the underscore.js source code
-            .replace('$UNDERSCORE$', underscore);
+              // $VERSION$, x.y.z
+                .replace(/\$VERSION\$/g, pkg.version)
+              // $YEAR$, yyyy
+                .replace(/\$YEAR\$/g, today.getFullYear())
+              // $DATE$, yyyy-mm-dd
+                .replace(/\$DATE\$/g, today.toISOString().substring(0, 10))
+              // $UNDERSCORE$, the underscore.js source code
+                .replace(/\$UNDERSCORE\$/g, underscore);
             // Write concatenated source to file
             grunt.file.write('dist/' + pkg.name + '.js', text);
           },
@@ -128,8 +129,8 @@ module.exports = function(grunt) {'use strict';
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
-    qunit: {
-      all: ['test/test-min-plain.html']
+    mochaTest: {
+      src: ['test/*.js']
     },
     jsdoc: {
       dist: {
@@ -156,7 +157,7 @@ module.exports = function(grunt) {'use strict';
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-compare-size');
 
@@ -168,9 +169,12 @@ module.exports = function(grunt) {'use strict';
     'jshint:test',
     'requirejs',
     'uglify',
-    'qunit',
-    'jsdoc',
+    'mochaTest',
     'compare_size'
+  ]);
+
+  grunt.registerTask('doc', [
+    'jsdoc'
   ]);
 
 };
