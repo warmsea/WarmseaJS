@@ -93,24 +93,18 @@ module.exports = function(grunt) {
       },
       test: {
         files: {
-          src: ['test/test.js', 'test/units/**/*.js']
+          src: ['test/*.js']
         },
         options: {
           // Enforcing options
           'strict': false,
           // Globals
           'globals': {
-            // RequireJS
-            'define': false,
             'require': false,
-            // QUnit
-            'deepEqual': false,
-            'equal': false,
-            'module': false,
-            'ok': false,
-            'strictEqual': false,
-            'test': false,
-            'throws': false
+            'describe': false,
+            'it': false,
+            'beforeEach': false,
+            'afterEach': false
           }
         }
       },
@@ -130,6 +124,9 @@ module.exports = function(grunt) {
       }
     },
     mochaTest: {
+      options: {
+        reporter: 'dot'
+      },
       src: ['test/*.js']
     },
     jsdoc: {
