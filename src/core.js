@@ -12,6 +12,12 @@
     var w = _.extend({}, _);
 
     /**
+     * The version of this WarmseaJS.
+     * @type {string}
+     */
+    w.VERSION = '$VERSION$';
+
+    /**
      * The global object of the executing environment.
      * @type {object}
      */
@@ -30,18 +36,8 @@
      * @param {string} msg
      * @throws {Error}
      */
-    w.error = w.error || function(msg) {
+    w.error = function(msg) {
       throw new Error(msg);
-    };
-
-    /**
-     * A compare function returns 1, if a &lt; b; -1, if a &gt; b; 0, otherwise.
-     * @param {any} a
-     * @param {any} b
-     * @return {number}
-     */
-    w.cmp = function(a, b) {
-      return a > b ? 1 : a < b ? -1 : 0;
     };
 
 // $FOOTER$

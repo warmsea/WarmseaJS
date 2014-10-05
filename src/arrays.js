@@ -1,5 +1,6 @@
 define([
-  './core'
+  './core',
+  './math'
 ], function(w) {
   'use strict';
 // $HEADER$
