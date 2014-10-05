@@ -4,6 +4,7 @@ define([
   './collections',
   './debug',
   './math',
+  './objects',
   './random',
   './strings',
   './types'
