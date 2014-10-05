@@ -10,21 +10,23 @@ define([
    * @method
    * @param {number|string} value The value; it can be a number.
    * @param {int} length The wanted length. Defaults to 2.
-   * @param {string} leading The leading character. Defaults to '0'.
+   * @param {string} leading The leading character. Defaults to a space (' ').
    */
   w.pad = function(value, length, leading) {
     value = w.str(value);
-    length = w.max([0, length === undefined ? 2 : length, value.length]);
-    leading = w.str(leading || '0');
+    length = w.max([0, length === undefined ? 0 : length, value.length]);
+    leading = w.str(leading === undefined ? ' ' : leading);
     var a = new Array(Math.ceil((length - value.length) / leading.length) + 1);
     return a.join(leading).substring(0, length - value.length) + value;
   };
 
   /**
-   * Replace each conversion specifier of a format string with the string representation of a specified object.
+   * Replace each conversion specifier of a format string with the string
+   * representation of a specified object.
    * @method
    * @param {string|function} format the format string.
-   * @param {...any|any[]|PlainObject} args Arguments one by one, or a list, or a map.
+   * @param {...any|any[]|PlainObject} args Arguments one by one, or a list,
+   *    or a map.
    * @return {string} The formatted string.
    */
   w.format = (function(w) {
@@ -76,7 +78,7 @@ define([
 
       // Find the start line.
       while (i < len) {
-        var start = lines[i++].match(/^[ \t]*\/\*!?<<<(\w+)(?:;(.+)?)?$/);
+        var start = lines[i++].match(/^[ \t]*\/\*\*?!?<<<(\w+)(?:;(.+)?)?$/);
         if (!start) {
           continue;
         }
