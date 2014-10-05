@@ -16,7 +16,7 @@ define([
     if (!w.isArray(arr)) {
       return false;
     }
-    return _.indexOf(arr, item) >= 0;
+    return w.indexOf(arr, item) >= 0;
   };
 
   /**
