@@ -12,6 +12,11 @@
     var w = _.extend({}, _);
 
     /**
+     * The unmodified underlying underscore object.
+     */
+    w._ = w.underscore =  _;
+
+    /**
      * The version of this WarmseaJS.
      * @type {string}
      */

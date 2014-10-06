@@ -28,51 +28,6 @@ define([
   };
 
   /**
-   * Merge the contents of two or more objects together into the first object.
-   *
-   * @param {?boolean} deep true for deep merge.
-   * @param {object} target the target object.
-   * @param {...object} source the source objects.
-   * @return {object} the extended target.
-   */
-  w.extend = function() {
-    var i, deep, target, source;
-    if (typeof arguments[0] === 'boolean') {
-      deep = arguments[0];
-      target = arguments[1] || {};
-      i = 2;
-    } else {
-      deep = false;
-      target = arguments[0] || {};
-      i = 1;
-    }
-
-    // If target is not an object, return {}.
-    if (!w.isObject(target)) {
-      return {};
-    }
-
-    for (; i < arguments.length; ++i) {
-      source = arguments[i];
-      // If source is not an object, ignore it.
-      if (!w.isObject(source)) {
-        continue;
-      }
-
-      for (var p in source) {
-        if (source.hasOwnProperty(p)) {
-          if (deep) {
-            target[p] = w.deepcopy(source[p]);
-          } else {
-            target[p] = source[p];
-          }
-        }
-      }
-    }
-    return target;
-  };
-
-  /**
    * Hide specified properties of an object.
    * @param {Object} obj the object
    * @param {Array<String>} props names of the properties

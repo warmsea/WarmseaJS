@@ -12,15 +12,17 @@
     global.warmsea = w;
   }
 
-  var overwriten = [];
+  var compatibleKeys = ['VERSION'];
+  var overwritten = [];
   _.each(underscoreKeys, function(k) {
-    if (_[k] !== w[k]) {
-      overwriten.push(k);
+    if (_[k] !== w[k] && !w.inArray(compatibleKeys, k)) {
+      overwritten.push(k);
     }
   });
-  if (overwriten.length) {
-    var overwritenMsg = 'The following functions of WarmseaJs is not compatible with underscore.js: ';
-    overwritenMsg += '"' + overwriten.join('", "') + '"';
+  if (overwritten.length) {
+    var overwritenMsg = 'The following functions of WarmseaJS ' +
+        'is not fully compatible with underscore.js: ';
+    overwritenMsg += '"' + overwritten.join('", "') + '"';
     if (global.console) {
       var warn = global.console.warn || global.console.log || w.noop;
       warn.call(global.console, overwritenMsg);
