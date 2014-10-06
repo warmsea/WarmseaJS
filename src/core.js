@@ -14,7 +14,7 @@
     /**
      * The unmodified underlying underscore object.
      */
-    w._ = w.underscore =  _;
+    w._ = w.underscore = _;
 
     /**
      * The version of this WarmseaJS.
@@ -27,6 +27,20 @@
      * @type {object}
      */
     w.global = global;
+
+    /**
+     * Save the previous `warmsea`.
+     */
+    var previousWarmsea = global.warmsea;
+
+    /**
+     * Return the current `warmsea` and restore the previous global one.
+     * @return {warmsea} This warmsea object.
+     */
+    w.noConflict = function() {
+      global.warmsea = previousWarmsea;
+      return this;
+    };
 
     /**
      * A function that throws an error with the message "Unimplemented".

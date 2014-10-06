@@ -12,7 +12,7 @@
     global.warmsea = w;
   }
 
-  var compatibleKeys = ['VERSION'];
+  var compatibleKeys = ['VERSION', 'noConflict'];
   var overwritten = [];
   _.each(underscoreKeys, function(k) {
     if (_[k] !== w[k] && !w.inArray(compatibleKeys, k)) {
