@@ -32,16 +32,15 @@ define([
      * Number of elements in the Queue.
      * @type {number}
      */
-    try {
+    if (w.isFunction(Object.defineProperty)) {
+      // I'm not interested in fully supporting IE 8.
+      // But I don't want it dies in the first place.
       Object.defineProperty(Queue.prototype, 'length', {
         enumerable: true,
         get: function() {
           return this.count();
         }
       });
-    } catch (e) {
-      // I'm not interested in fully supporting IE 8.
-      // But I don't want it dies in the first place.
     }
 
     /**

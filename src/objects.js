@@ -54,9 +54,11 @@ define([
    * @param {Boolean} enumerable whether the property if enumerable
    */
   w.memoizedProperty = function(obj, name, getter, enumerable) {
+    if (!w.isFunction(Object.defineProperty)) {
+      obj[name] = getter();
+    }
     var cachedValue = null;
 
-    // build enumerable attribute for each value with lazy accessor.
     Object.defineProperty(obj, name, {
       get: function() {
         if (cachedValue === null) {
