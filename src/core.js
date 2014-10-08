@@ -56,6 +56,9 @@
      * @throws {Error}
      */
     w.error = function(msg) {
+      if (w.isFunction(w.format)) {
+        msg = w.format.apply(w, arguments);
+      }
       throw new Error(msg);
     };
 
