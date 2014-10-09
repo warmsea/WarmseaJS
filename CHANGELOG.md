@@ -1,3 +1,68 @@
+Version 1.0.0 (2014-10-07)
+==========================
+
+WarmseaJS v1.0.0 is designed to be a drop-in replacement of underscore.js with
+`var _ = warmsea;` executed. It is fully compatible with underscore.js v1.7.0
+with two exceptions, `.VERSION` and `.noConflict()`. Both functions works for
+warmsea but underscore.
+
+Here's a list of all the features WarmseaJS provided besides underscore
+functions.
+
+* Core
+  * w._ = w.underscore
+  * w.VERSION
+  * w.global
+  * w.noConflict()
+  * w.unimplement()
+  * w.error()
+* Arrays
+  * w.inArray()
+  * w.sort()
+* Collections
+  * w.Queue - (*Queue, the class*)
+    * w.Queue.prototype.allowEmptyDequeue
+    * w.Queue.prototype.length
+    * w.Queue.prototype.clear()
+    * w.Queue.prototype.count()
+    * w.Queue.prototype.enqueue()
+    * w.Queue.prototype.dequeue()
+    * w.Queue.prototype.peek()
+  * w.Stack - (*Stack, the class*)
+    * w.Stack.prototype.allowEmptyPop
+    * w.Stack.prototype.length
+    * w.Stack.prototype.clear()
+    * w.Stack.prototype.count()
+    * w.Stack.prototype.push()
+    * w.Stack.prototype.pop()
+    * w.Stack.prototype.peek()
+* Debug
+  * w.debug()
+  * w.debug.disable()
+  * w.debug.enable()
+  * w.debug.enabled()
+* Math
+  * w.cmp()
+* Objects
+  * w.hideProperties()
+  * w.memoizedProperty()
+* Random
+  * w.randomFloat()
+  * w.randomInt()
+  * w.randomString()
+* Strings
+  * w.pad()
+  * w.format()
+* Types
+  * w.array()
+  * w.bool()
+  * w.f()
+  * w.i()
+  * w.isInt()
+  * w.isPlainObject()
+  * w.str()
+
+
 Version 0.5.0 (2014-06-08)
 ==========================
 
