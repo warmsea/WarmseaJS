@@ -20,5 +20,3 @@ node_modules
 
 .sizecache.json
 jsdoc
-dist/warmsea.js
-dist/warmsea.min.js
