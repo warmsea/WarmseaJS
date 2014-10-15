@@ -5,44 +5,67 @@ WarmseaJS
 Features
 --------
 
-**WarmseaJS** has the following features:
+**WarmseaJS** is yet another utility library.
+
+WarmseaJS v1.0.0 is designed to be a drop-in replacement of underscore.js with
+`var _ = warmsea;` executed. It is fully compatible with underscore.js v1.7.0
+with two exceptions, `.VERSION` and `.noConflict()`. Both functions works for
+warmsea but underscore.
+
+It provides more feature besides underscore functions, such as:
 
 1. Type casting and testing
 1. String formatting
 1. Debugger
 1. Collections
-1. Array functions
-1. And some other features
+1. And more...
 
-There is a brief introduction below.
-
-You can also run `grunt jsdoc` to generate the API documentation. Or check the
-[online version](http://warmsea.github.io/warmseajs/jsdoc/).
 
 Get Started
 -----------
 
+### Node.js
+
+Install **WarmseaJS** with NPM:
+
+```bash
+npm install warmsea
+```
+
+Then, you can use all the APIs from **WarmseaJS**. For example:
+
+```javascript
+var w = require('warmsea');
+
+var name = 'warmsea';
+var msg = w.format('Hello, %s!', name);
+console.log(msg);  // `Hello, warmsea!` will be printed.
+```
+
+### Browser
+
 Download **WarmseaJS**:
 
-* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.5.0.min.js)
-* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea-v0.5.0.js)
-* [The full source code package, as a ZIP file](https://github.com/warmsea/WarmseaJS/releases/download/v0.5.0/warmseajs-v0.5.0.zip)
+* [The compressed, production WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea.min.js)
+* [The uncompressed, development WarmseaJS, as a single JS file](https://raw.githubusercontent.com/warmsea/WarmseaJS/master/dist/warmsea.js)
 
 Include the JS file with `<script>` tag or [**RequireJS**](http://requirejs.org/).
 When included with `<script>` tag, a global namespace `warmsea` will be
-introduced. And personally, I use `w` as a shortcut for `warmsea`. You could
-also use `warmseajs`, `wjs`, `$w` or anything you want.
+introduced. Personally, I use `_` or `w` as a shortcut of `warmsea`. You can
+use anything else you like, or just use `warmsea`. In this README file, `w` is
+used as the shortcut of `warmsea`.
+
 
 ```html
 <script src="path/to/warmsea.min.js"></script>
 <script>
-  var w = warmsea;
+  var _ = warmsea;
   ...
 </script>
 ```
 
 ```javascript
-require(['warmsea'], function(w) {
+require(['warmsea'], function(_) {
   ...
 });
 ```
@@ -54,75 +77,181 @@ Then, you can use all the APIs from **WarmseaJS**. For example:
 
 ```javascript
 var name = 'warmsea';
-var msg = w.format('Hello, %s!', );
+var msg = w.format('Hello, %s!', name);
 console.log(msg);  // `Hello, warmsea!` will be printed.
 ```
 
 
-Type casting and testing
-------------------------
+Features not in underscore
+--------------------------
 
-Type casting and testing feature is from the `warmsea/types` module. It
-contains the following functions:
+### Core Module
 
-* warmsea.bool(value)
-* warmsea.i(value)  *// i for integer*
-* warmsea.f(value)  *// f for float*
-* warmsea.str(value)
-* warmsea.array(value)
-* warmsea.isNumber(value)
-* warmsea.isInt(value)
-* warmsea.isString(value)
-* warmsea.isArray(value)
-* warmsea.isFunction(value)
-* warmsea.isPlainObject(value)
-* warmsea.isObject(value)
+#### w.error()
 
-Examples:
+Throws an Error with a specified message.
 
 ```javascript
-// type casting
-w.bool(1);         // true
-w.i('35');         // 35
-w.i('0xff');       // 255
-w.f('1.35e3');     // 1350
-w.str(1.35e3);     // '1350'
-w.array();         // []
-w.array('hello');  // ['hello']
+w.error();
+// throw new Error();
+
+w.error('invalid');
+// throw new Error('invalid');
+
+w.error('[%s] invalid', (new Date()).toISOString());
+// throw new Error('[2014-10-09T11:27:19.158Z] invalid');
+// w.error() is powered by w.format(), so format feature is provided.
 ```
+
+#### w.unimplemented()
+
+Throws an Error says "Unimplemented".
+
+### Arrays Module
+
+#### w.inArray()
+
+`w.inArray()` is powered by `_.indexOf()`.
 
 ```javascript
-// type testing
-w.isNumber(0xff);             // true
-w.isNumber('0xff');           // false
-w.isInt(1);                   // true
-w.isString('0xff');           // true
-w.isArray([]);                // true
-w.isFunction(w.isFunction);   // true
-w.isPlainObject({'a': '1'});  // true
-w.isPlainObject(new Date());  // false
-w.isObject(new Date());       // true
-w.isObject([]);               // true
+w.inArray([1, 2, 3], 2);  // Returns true
+w.inArray([1, 2, 3], 4);  // Returns false
 ```
 
+#### w.sort()
 
-String formatting
------------------
+`w.sort(list, cmp, context)` is a in-place sort function. It returns `list`
+after it is sorted.
 
-String formatting feature is from the `warmsea/types` module. It contains the
-following functions:
+```javascript
+w.sort([-3, -1, 2, 4], function(a, b) {
+  return w.cmp(a * a, b * b);
+});
+// Returns [-1, 2, -3, 4]
+```
 
-* w.pad(value, length, leading)
-* w.format(format, ...)
+### Collections Module
 
-Examples:
+Collections module provides two classes: `w.Stack` and `w.Queue`.
+
+* Collections
+  * w.Queue - (*Queue, the class*)
+    * w.Queue.prototype.allowEmptyDequeue
+    * w.Queue.prototype.length
+    * w.Queue.prototype.clear()
+    * w.Queue.prototype.count()
+    * w.Queue.prototype.enqueue()
+    * w.Queue.prototype.dequeue()
+    * w.Queue.prototype.peek()
+  * w.Stack - (*Stack, the class*)
+    * w.Stack.prototype.allowEmptyPop
+    * w.Stack.prototype.length
+    * w.Stack.prototype.clear()
+    * w.Stack.prototype.count()
+    * w.Stack.prototype.push()
+    * w.Stack.prototype.pop()
+    * w.Stack.prototype.peek()
+
+### Debug Modele
+
+```javascript
+// Create a debugger with the specified name.
+var dbg = w.debug('business:account');
+
+// All debuggers are disabled by default.
+
+// Enable a debugger.
+w.debug.enable('business:account');
+
+// Enable all debuggers start with "business:".
+w.debug.enable('business:*');
+
+// Disable a debugger.
+w.debug.disable('business:someName');
+
+// Call a debugger. If it is enabled, it will print the debug message.
+// If not, nothing happens.
+dbg('Debug Message');
+
+// Debuggers can be enabled or disabled before OR after their creations.
+w.debug.enable('*');          // Enable all debuggers.
+var dbg1 = w.debug('hello');  // It is enabled.
+
+// Check if a name is enabled.
+w.debug.enabled('someName');
+```
+
+### Math Module
+
+#### w.cmp()
+
+```javascript
+w.cmp = function(a, b) {
+  return a > b ? 1 : a < b ? -1 : 0;
+};
+```
+
+### Objects Module
+
+#### w.hideProperties()
+
+Make some properties not enumerable. Only works in ES5.
+
+```javascript
+var obj = {
+  a: 1,
+  b: 2
+};
+
+w.keys(obj);  // Returns ["a", "b"]
+
+w.hideProperties(obj, ['a']);
+
+w.keys(obj);  // Returns ["b"]
+```
+
+#### w.memoizedProperty()
+
+`w.memoizedProperty(obj, name, getter, enumerable=true)` adds a memoized property
+to an object.
+
+In ES5, the property is initialized with `getter` during the first access, and
+then the value is remembered. But in ES4, the property is initialized
+immediately.
+
+```javascript
+var obj = {};
+w.memoizedProperty(obj, '_date', function() {
+  return new Date();
+}, false);
+
+```
+
+### Random Module
+
+Random module contains 3 functions: `w.randomInt()`, `w.randomFloat`, and
+`randomString()`.
+
+Function                             | Description
+-------------------------------------|------------
+w.randomInt(stop)                    | Returns an integer in [0, stop)
+w.randomInt(start, stop)             | Returns an integer in [start, stop)
+w.randomFloat(stop)                  | Returns a number in [0, stop)
+w.randomFloat(start, stop)           | Returns a number in [start, stop)
+w.randomString(length, allowedChars) | Returns a random string
+
+### Strings Module
+
+#### w.pad()
 
 ```javascript
 // pad
-w.pad('hello', 8, '#'); // '###hello' 
+w.pad('hello', 8, '#'); // '###hello'
 w.pad(7, 3, 0);         // '007'
 w.pad('x', 5, 'abc');   // 'abcax'
 ```
+
+#### w.format()
 
 ```javascript
 // format
@@ -158,143 +287,87 @@ w.format(function() {
                                 // '       space!
 ```
 
-
-Collections features
-====================
-
-A ```warmsea.Queue``` class and a ```warmsea.Stack``` faster than native arrays.
-
-"""javascript
-var queue = new w.Queue();
-queue.enqueue('a');
-queue.enqueue('b');
-queue.length;                     // 2
-queue.peek();                     // 'a'
-queue.dequeue();                  // 'a'
-queue.length;                     // 1
-queue.clear();
-queue.dequeue();                  // undefined
-queue.allowEmptyDequeue = false;
-queue.dequeue();                  // throws an Error
-
-var stack = new w.Stack();
-stack.allowEmptyPop = false;
-stack.push('a');
-stack.push('b');
-stack.pop();                      // 'b'
-stack.peek();                     // 'a'
-stack.length;                     // 1
-stack.clear();
-stack.pop();                      // throws an Error
-"""
-
-
-Other features
---------------
-
-There is a few other functions.
-
-Function                             | Description
------------------------------------- | -----------
-w.noop()                             | An empty function
-w.identify(value)                    | Retures value itself*
-w.unimplemented()                    | Throws an error*
-w.error(msg)                         | Throws an error with a message*
-w.cmp(a, b)                          | Compare values with `>` and `<`
-w.keys(obj)                          | Returns keys of an object
-w.values(obj)                        | Returns values of an object
-w.range(start, stop, step)           | Generates an array
-w.sort(arr, cmp)                     | An in-place stable sorter
-w.max(...)                           | Returns the maximum value
-w.min(...)                           | Returns the minimum value
-w.random()                           | Returns a random number in [0, 1)
-w.randomInt(stop)                    | Returns an integer in [0, stop)
-w.randomInt(start, stop)             | Returns an integer in [start, stop)
-w.randomFloat(stop)                  | Returns a number in [0, stop)
-w.randomFloat(start, stop)           | Returns a number in [start, stop)
-w.randomString(length, allowedChars) | Returns a random string
-
-Examples:
+### Types Module
 
 ```javascript
-var obj = {
-  'js': 'JavasSript',
-  'py': 'Python'
-};
-w.keys(obj);                    // ['js', 'py']
-w.values(obj);                  // ['JavaScript', 'Python']
-
-w.range(5);                     // [0, 1, 2, 3, 4]
-w.range(1, 9, 2);               // [1, 3, 5, 7]
-w.range(9, 1, -2);              // [9, 7, 5, 3]
-
-w.min([2, 3, 5, 8, 13]);        // 2
-w.min(2, 3, 5, 8, 13);          // 2
-
-function func = function() {
-  return w.cmp(w.str(a), w.str(b));
-}
-w.min(func, [2, 3, 5, 8, 13]);  // 13
-w.min(func, 2, 3, 5, 8, 13);    // 13
-
-w.randomString(4, 'abcd');      // something like 'ccad'
+// type casting
+w.bool(1);         // true
+w.i('35');         // 35
+w.i('0xff');       // 255
+w.f('1.35e3');     // 1350
+w.str(1.35e3);     // '1350'
+w.array();         // []
+w.array('hello');  // ['hello']
 ```
 
-A full list of APIs
-===================
+```javascript
+// type testing
+w.isNumber(0xff);             // true
+w.isNumber('0xff');           // false
+w.isInt(1);                   // true
+w.isString('0xff');           // true
+w.isArray([]);                // true
+w.isFunction(w.isFunction);   // true
+w.isPlainObject({'a': '1'});  // true
+w.isPlainObject(new Date());  // false
+w.isObject(new Date());       // true
+w.isObject([]);               // true
+```
+
+A full list of APIs not in underscore
+=====================================
+
+Here, I use `w` as the shortcut of `warmsea`.
 
 * Core
+  * w._ = w.underscore
+  * w.VERSION
   * w.global
-  * w.noop()
-  * w.identity()
-  * w.unimplemented()
+  * w.noConflict()
+  * w.unimplement()
   * w.error()
-  * w.cmp()
-  * w.keys() _(from underscore.js)_
-  * w.values() _(from underscore.js)_
 * Arrays
-  * w.indexOf() _(from underscore.js)_
   * w.inArray()
-  * w.range() _(from underscore.js)_
-  * w.all() _(from underscore.js)_
-  * w.any() _(from underscore.js)_
-  * w.each() _(from underscore.js)_
-  * w.map() _(from underscore.js)_
-  * w.reduce() _(from underscore.js)_
-  * w.filter() _(from underscore.js)_
   * w.sort()
 * Collections
-  * Queue class
-  * Stack class
-* Debug _(inspired by [debug](https://github.com/visionmedia/debug))_
+  * w.Queue - (*Queue, the class*)
+    * w.Queue.prototype.allowEmptyDequeue
+    * w.Queue.prototype.length
+    * w.Queue.prototype.clear()
+    * w.Queue.prototype.count()
+    * w.Queue.prototype.enqueue()
+    * w.Queue.prototype.dequeue()
+    * w.Queue.prototype.peek()
+  * w.Stack - (*Stack, the class*)
+    * w.Stack.prototype.allowEmptyPop
+    * w.Stack.prototype.length
+    * w.Stack.prototype.clear()
+    * w.Stack.prototype.count()
+    * w.Stack.prototype.push()
+    * w.Stack.prototype.pop()
+    * w.Stack.prototype.peek()
+* Debug
   * w.debug()
   * w.debug.disable()
   * w.debug.enable()
   * w.debug.enabled()
 * Math
-  * w.min() _(from underscore.js)_
-  * w.max() _(from underscore.js)_
+  * w.cmp()
+* Objects
+  * w.hideProperties()
+  * w.memoizedProperty()
 * Random
-  * w.random()
-  * w.randomInt()
   * w.randomFloat()
+  * w.randomInt()
   * w.randomString()
 * Strings
   * w.pad()
   * w.format()
 * Types
-  * w.bool()
-  * w.i()
-  * w.f()
-  * w.str()
   * w.array()
-  * w.isNaN() _(from underscore.js)_
-  * w.isNumber() _(from underscore.js)_
+  * w.bool()
+  * w.f()
+  * w.i()
   * w.isInt()
-  * w.isString() _(from underscore.js)_
-  * w.isArray() _(from underscore.js)_
-  * w.isFunction() _(from underscore.js)_
-  * w.isObject() _(from underscore.js)_
   * w.isPlainObject()
-  * w.deepcopy()
-  * w.extend()
+  * w.str()
