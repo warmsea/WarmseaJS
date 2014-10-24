@@ -1,7 +1,7 @@
 {
   "name": "warmsea",
-  "version": "1.0.0",
-  "description": "My JavaScript library.",
+  "version": "1.0.1",
+  "description": "Yet another JavaScript utility library with features like string formatting, collections, and more.",
   "main": "dist/warmsea.js",
   "repository": {
     "type": "git",
@@ -10,7 +10,8 @@
   "keywords": [
     "warmsea",
     "javascript",
-    "library"
+    "library",
+    "format"
   ],
   "author": "Su Su",
   "license": "MIT",

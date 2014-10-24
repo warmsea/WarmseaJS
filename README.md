@@ -5,7 +5,7 @@ WarmseaJS
 Features
 --------
 
-**WarmseaJS** is yet another utility library.
+**WarmseaJS** is yet another JavaScript utility library.
 
 WarmseaJS v1.0.0 is designed to be a drop-in replacement of underscore.js with
 `var _ = warmsea;` executed. It is fully compatible with underscore.js v1.7.0
