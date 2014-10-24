@@ -4,7 +4,7 @@
  * Copyright 2009, 2014 Su Su
  * Released under the MIT license
  *
- * Date: 2014-10-15
+ * Date: 2014-10-24
  */
 
 
@@ -1504,11 +1504,11 @@
   };
 
   /**
-   * Test if an item is in an array.
+   * Tests if an item is in an array.
    *
-   * @param {array} arr The array
-   * @param {any} item The item
-   * @return {boolean} true, if the item is in the array; false, if not.
+   * @param {Array} arr The array
+   * @param {*} item The item
+   * @returns {Boolean} true, if the item is in the array; false, if not.
    */
   w.inArray = function(arr, item) {
     if (!w.isArray(arr)) {
@@ -1521,9 +1521,9 @@
    * In-place stable sort.
    *
    * @param {Array} list The array to be sorted.
-   * @param {function} cmp The compare function; by default, it's w.cmp。
-   * @param {object} context The context for cmp.
-   * @return {Array} The sorted array.
+   * @param {Function} cmp The compare function; by default, it's w.cmp。
+   * @param {Object} context The context for cmp.
+   * @returns {Array} The sorted array.
    */
   w.sort = function(list, cmp, context) {
     cmp = cmp || w.cmp;
@@ -1541,6 +1541,20 @@
       delete list[i]._$wssi;
     }
     return list;
+  };
+
+  /**
+   * Returns a (stably) sorted (shallow) copy of an array.
+   *
+   * @param {Array} list The array to be sorted.
+   * @param {Function} cmp The compare function; by default, it's w.cmp.
+   * @param {Object} context The context for cmp.
+   * @returns {Array} A sorted copy.
+   */
+  w.sorted = function(list, cmp, context) {
+    var copy = w.clone(list);
+    w.sort(copy, cmp, context);
+    return copy;
   };
 
   w.Queue = (function() {

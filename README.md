@@ -130,6 +130,11 @@ w.sort([-3, -1, 2, 4], function(a, b) {
 // Returns [-1, 2, -3, 4]
 ```
 
+#### w.sorted()
+
+Almost the same as `w.sorted()` except it doesn't change the original array,
+but returns a sorted shallow copied one.
+
 ### Collections Module
 
 Collections module provides two classes: `w.Stack` and `w.Queue`.
@@ -329,6 +334,7 @@ Here, I use `w` as the shortcut of `warmsea`.
 * Arrays
   * w.inArray()
   * w.sort()
+  * w.sorted()
 * Collections
   * w.Queue - (*Queue, the class*)
     * w.Queue.prototype.allowEmptyDequeue
